@@ -44,6 +44,14 @@ void Game::Dibujar()
 	m_Avatar->Dibujar(*wnd);
 	
 
+	for (auto& ragdoll : ragdolls) {
+		ragdoll->Actualizar(); // Llama a la función que actualiza el sprite del torso
+	}
+
+	for (auto& ragdoll : ragdolls) {
+		ragdoll->Dibujar(*wnd); // Llama a la función que dibuja el sprite del torso
+	}
+
 }
 
 void Game::Eventos()
@@ -177,7 +185,7 @@ void Game::InitPhysics()
 	//creamos el cañon
 	cannon = Box2DHelper::CreateRectangularStaticBody(phyWorld, 11, 1.2f);
 
-	//creamos el cañon
+	//creamos el bloqueprueba
 	obstaPrueba	= Box2DHelper::CreateRectangularDynamicBody(phyWorld, 5, 10, 0.1f, 0.1f, 0.1f);
 	obstaPrueba->SetTransform(b2Vec2(40.0f, 40.0f), 0.0f);
 

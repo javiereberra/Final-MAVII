@@ -1,6 +1,7 @@
 #pragma once
 #include <Box2D/Box2D.h>
 #include "SFMLRenderer.h"
+#include "Avatar.h"
 
 class Ragdoll {
 private:
@@ -19,6 +20,12 @@ private:
     b2RevoluteJoint* jointRightLegTorso;
     b2RevoluteJoint* jointLeftLegTorso;
 
+    //AVATAR TORSO
+    Avatar* avatarTorso;
+    Texture torsoTexture; // Textura para el torso
+    Sprite torsoSprite;
+
+
     b2World* world;
 
 public:
@@ -26,6 +33,9 @@ public:
     Ragdoll(b2World* world, const b2Vec2& position);
     ~Ragdoll();
 
+    //para actualizar sprites?
+    void Actualizar();
+    void Dibujar(sf::RenderWindow& wnd);
   
     void applyImpulse(const b2Vec2& impulse);
     

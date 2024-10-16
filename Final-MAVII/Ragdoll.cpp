@@ -9,6 +9,13 @@ Ragdoll::Ragdoll(b2World* world, const b2Vec2& position)
     torso = Box2DHelper::CreateRectangularDynamicBody(world, 2.0f, 4.0f, 0.7f, 0.1, 0.1f);
     torso->SetTransform(position, 0);
 
+    //AVATAR
+    torsoTexture.loadFromFile("block.png");
+    sf::Sprite* s = new sf::Sprite(torsoTexture);
+
+    avatarTorso = new Avatar(torso, s);
+
+
     // Crear cabeza
     b2Vec2 cabezaPosition = position + b2Vec2(0.0f, -7.0f); // Ajustar posición para que esté encima
     cabeza = Box2DHelper::CreateRectangularDynamicBody(world, 1.7f, 1.7f, 0.7f, 0.1, 0.1f);
@@ -79,6 +86,21 @@ Ragdoll::Ragdoll(b2World* world, const b2Vec2& position)
     jointDef.localAnchorB.Set(0, 1.5f);     // Parte superior de la pierna izquierda
     jointLeftLegTorso = (b2RevoluteJoint*)world->CreateJoint(&jointDef);
 }
+
+void Ragdoll::Actualizar() {
+    // Actualizar la física del ragdoll (si es necesario)
+
+    // Actualizar el avatar del torso
+    avatarTorso->Actualizar();
+}
+
+void Ragdoll::Dibujar(sf::RenderWindow& wnd) {
+    // Dibujar el avatar del torso
+    avatarTorso->Dibujar(wnd);
+}
+
+
+
 
 //destructor
 
