@@ -25,6 +25,10 @@ private:
 	float frameTime;
 	int fps;
 
+	//Textura y sprite para el fondo
+	Texture* textura1;
+	Sprite* fondo;
+
 
 	//cuerpo del cañon
 
@@ -57,6 +61,6 @@ public:
 	void Eventos();
 	void SetZoom();
 
-
+	void MenuInicio();
 
 };

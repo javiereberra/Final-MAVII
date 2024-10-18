@@ -13,6 +13,15 @@ Game::Game(int ancho, int alto, std::string titulo)
 	SetZoom();
 	InitPhysics();
 
+	//Textura y Sprite del fondo del nivel
+	textura1 = new Texture;
+	fondo = new Sprite;
+	textura1->loadFromFile("fondo1.jpg");
+	fondo->setTexture(*textura1);
+	fondo->setScale(2.0f, 2.0f);
+
+	MenuInicio();
+
 }
 
 //el clásico gameloop
@@ -196,6 +205,44 @@ void Game::InitPhysics()
 	m_Avatar = new Avatar(obstaPrueba, s);
 
 
+}
+
+
+void Game::MenuInicio() {
+
+
+
+
+	wnd->setView(wnd->getDefaultView());
+
+	// Mostrar el menú
+	while (wnd->isOpen()) {
+		sf::Event event;
+		while (wnd->pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
+				wnd->close();
+				return;
+			}
+			if (event.type == sf::Event::KeyPressed) {
+				if (event.key.code == sf::Keyboard::Num1) {
+					// Opción para iniciar el juego
+					SetZoom();
+					return;  // Salimos del menú y continuamos con el juego
+				}
+				else if (event.key.code == sf::Keyboard::Num2) {
+					// Opción para salir
+					wnd->close();
+					return;
+				}
+			}
+		}
+
+		// Dibujar el menú
+		wnd->clear(sf::Color::Black);
+		wnd->draw(*fondo);
+		wnd->display();
+	}
+	
 }
 
 //destructor de game
