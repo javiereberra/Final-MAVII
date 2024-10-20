@@ -28,6 +28,8 @@ private:
 	//Textura y sprite para el fondo
 	Texture* textura1;
 	Sprite* fondo;
+	Texture* textura2;
+	Sprite* menuInfo;
 
 
 	//cuerpo del cañon
@@ -44,8 +46,15 @@ private:
 	float scaleX;
 	float scaleY;
 
+	//para gestionar los niveles
+	int currentLevel;
+	bool levelCompleted;
+
 	//lista de ragdolls
 	std::list<Ragdoll*> ragdolls;
+
+	//contador de Ragdolls
+	int contadorRagdolls;
 
 public:
 
@@ -61,6 +70,15 @@ public:
 	void Eventos();
 	void SetZoom();
 
+	void Level1();
+	void Level2();
+	void Level3();
+
+	void NextLevel();
+	void ResetLevel();
+
 	void MenuInicio();
+	void MenuInfo();
+	void MenuGameOver();
 
 };

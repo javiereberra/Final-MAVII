@@ -16,12 +16,20 @@ Game::Game(int ancho, int alto, std::string titulo)
 	//Textura y Sprite del fondo del nivel
 	textura1 = new Texture;
 	fondo = new Sprite;
-	textura1->loadFromFile("fondo1.jpg");
+	textura1->loadFromFile("menuInicio.png");
 	fondo->setTexture(*textura1);
-	fondo->setScale(2.0f, 2.0f);
+
+	textura2 = new Texture;
+	menuInfo = new Sprite;
+	textura2->loadFromFile("menuInfo.jpg");
+	menuInfo->setTexture(*textura2);
 
 	MenuInicio();
 
+	currentLevel = 1;
+	levelCompleted = false;
+
+	contadorRagdolls = 0;
 }
 
 //el clásico gameloop
@@ -31,11 +39,95 @@ void Game::loop()
 	{
 		wnd->clear(clearColor);
 		Eventos();
-		Actualizar();
-		Dibujar();
+		//GESTION DE NIVELES//
+		switch (currentLevel)
+		{
+		case 1:
+			Level1();
+			break;
+		case 2:
+			Level2();
+			break;
+		case 3:
+			Level3();
+			break;
+		default:
+			std::cout << "No hay más niveles." << std::endl;
+			wnd->close();
+			break;
+		}
+
+		//Actualizar();
+		//Dibujar();
 		wnd->display();
 
 	}
+}
+
+void Game::Level1()
+{
+	// Lógica de actualización del nivel 1
+	Actualizar(); // Actualiza las físicas del mundo, objetos, etc.
+
+	// Dibujar objetos del nivel 1
+	Dibujar(); // Aquí dibujas los objetos del nivel, ragdolls, etc.
+
+	// Condición para pasar al siguiente nivel
+	if (contadorRagdolls >= 5) {
+		levelCompleted = true;
+		NextLevel(); // Pasamos al siguiente nivel
+	}
+}
+
+void Game::Level2()
+{
+	// Lógica de actualización del nivel 2
+	Actualizar();
+	// Dibujar objetos del nivel 2
+	Dibujar();
+
+	// Condición para pasar al siguiente nivel
+	if (contadorRagdolls >= 10) {
+		levelCompleted = true;
+		NextLevel();
+	}
+}
+
+// Método para el tercer nivel
+void Game::Level3()
+{
+	// Lógica de actualización del nivel 3
+	Actualizar();
+	Dibujar();
+
+	if (contadorRagdolls >= 15) {
+		std::cout << "¡Felicidades, has completado el juego!" << std::endl;
+		wnd->close();
+	}
+}
+
+void Game::NextLevel()
+{
+	if (levelCompleted) {
+		currentLevel++; // Incrementamos el nivel actual
+		ResetLevel(); // Reiniciar los parámetros del nuevo nivel
+	}
+}
+
+void Game::ResetLevel()
+{
+	
+	// Aquí puedes restablecer el estado de los objetos para el nuevo nivel
+	InitPhysics(); // Por ejemplo, reiniciar las físicas
+	SetZoom();     // Reajustar la cámara si es necesario
+	levelCompleted = false; // Restablecer la bandera de nivel completado
+
+
+	//para limpiar los ragdolls
+	for (auto& ragdoll : ragdolls) {
+		delete ragdoll;  // Eliminar cada ragdoll de la memoria
+	}
+	ragdolls.clear();
 }
 
 //actualiza el phyworld
@@ -124,6 +216,7 @@ void Game::Eventos()
 			//se aplica el impulso
 			ragdoll->applyImpulse(impulse);
 			ragdolls.push_back(ragdoll);
+			contadorRagdolls++;
 			break;
 					
 
@@ -227,6 +320,7 @@ void Game::MenuInicio() {
 				if (event.key.code == sf::Keyboard::Num1) {
 					// Opción para iniciar el juego
 					SetZoom();
+					MenuInfo();
 					return;  // Salimos del menú y continuamos con el juego
 				}
 				else if (event.key.code == sf::Keyboard::Num2) {
@@ -243,6 +337,39 @@ void Game::MenuInicio() {
 		wnd->display();
 	}
 	
+}
+
+
+void Game::MenuInfo() {
+
+
+
+
+	wnd->setView(wnd->getDefaultView());
+
+	// Mostrar el menú
+	while (wnd->isOpen()) {
+		sf::Event event;
+		while (wnd->pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
+				wnd->close();
+				return;
+			}
+			if (event.type == sf::Event::KeyPressed) {
+				if (event.key.code == sf::Keyboard::Space) {
+					// Opción para continuar el juego
+					SetZoom();
+					return;  // Salimos del menú y continuamos con el juego
+				}
+			}
+		}
+
+		// Dibujar el menú
+		wnd->clear(sf::Color::Black);
+		wnd->draw(*menuInfo);
+		wnd->display();
+	}
+
 }
 
 //destructor de game
