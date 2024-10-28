@@ -73,7 +73,7 @@ void Game::Level1()
 	Dibujar(); // Aquí dibujas los objetos del nivel, ragdolls, etc.
 
 	// Condición para pasar al siguiente nivel
-	if (contadorRagdolls >= 5) {
+	if (contadorRagdolls >= 10) {
 		levelCompleted = true;
 		NextLevel(); // Pasamos al siguiente nivel
 	}
@@ -87,7 +87,7 @@ void Game::Level2()
 	Dibujar();
 
 	// Condición para pasar al siguiente nivel
-	if (contadorRagdolls >= 10) {
+	if (contadorRagdolls >= 20) {
 		levelCompleted = true;
 		NextLevel();
 	}
@@ -100,7 +100,7 @@ void Game::Level3()
 	Actualizar();
 	Dibujar();
 
-	if (contadorRagdolls >= 15) {
+	if (contadorRagdolls >= 30) {
 		std::cout << "¡Felicidades, has completado el juego!" << std::endl;
 		wnd->close();
 	}
@@ -266,18 +266,27 @@ void Game::InitPhysics()
 	techo->SetTransform(b2Vec2(50.0f, 0.0f), 0.0f);
 
 	//creamos dos obstáculos estáticos
-	b2Body* obstaculo1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 20, 5);
-	obstaculo1->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
+	b2Body* obstaculo1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 20, 2);
+	obstaculo1->SetTransform(b2Vec2(60.0f, 20.0f), 0.0f);
 
-	b2Body* obstaculo2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 20, 10);
-	obstaculo2->SetTransform(b2Vec2(80.0f, 80.0f), 0.0f);
+	b2Body* obstaculo2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 20, 2);
+	obstaculo2->SetTransform(b2Vec2(60.0f, 40.0f), 0.0f);
+
+	b2Body* obstaculo3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 20, 2);
+	obstaculo3->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
+
+	b2Body* obstaculo4 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 2, 20);
+	obstaculo4->SetTransform(b2Vec2(80.0f, 90.0f), 0.0f);
+
+
+
 
 	//creamos dos obstàculos dinámicos
-	b2Body* obstaculo3 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 5, 10, 0.1f, 0.1f, 0.1f);
-	obstaculo3->SetTransform(b2Vec2(80.0f, 70.0f), 0.0f);
+	b2Body* obstaculoD1 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 5, 10, 0.1f, 0.1f, 0.1f);
+	obstaculoD1->SetTransform(b2Vec2(60.0f, 70.0f), 0.0f);
 
-	b2Body* obstaculo4 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 5, 10, 0.1f, 0.1f, 0.1f);
-	obstaculo4->SetTransform(b2Vec2(55.0f, 53.0f), 0.0f);
+	b2Body* obstaculoD2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 5, 10, 0.1f, 0.1f, 0.1f);
+	obstaculoD2->SetTransform(b2Vec2(60.0f, 50.0f), 0.0f);
 
 
 	//creamos la base del cañon
@@ -289,7 +298,7 @@ void Game::InitPhysics()
 
 	//creamos el bloqueprueba
 	obstaPrueba	= Box2DHelper::CreateRectangularDynamicBody(phyWorld, 5, 10, 0.1f, 0.1f, 0.1f);
-	obstaPrueba->SetTransform(b2Vec2(40.0f, 40.0f), 0.0f);
+	obstaPrueba->SetTransform(b2Vec2(60.0f, 30.0f), 0.0f);
 
 	//asignamos la textura al sprite y al avatar
 	t.loadFromFile("block.png");
