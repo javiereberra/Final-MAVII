@@ -10,7 +10,7 @@ Ragdoll::Ragdoll(b2World* world, const b2Vec2& position)
     torso->SetTransform(position, 0);
 
     //AVATAR
-    torsoTexture.loadFromFile("block.png");
+    torsoTexture.loadFromFile("assets/block.png");
     sf::Sprite* s = new sf::Sprite(torsoTexture);
 
     avatarTorso = new Avatar(torso, s);

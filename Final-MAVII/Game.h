@@ -55,6 +55,14 @@ private:
 
 	//contador de Ragdolls
 	int contadorRagdolls;
+	Font* fuente;
+	Text* textContador;
+
+	//CAJAS CORRECTAS
+	Sprite* cajaCorrecta1;
+	Sprite* cajaCorrecta2;
+	Sprite* cajaCorrecta3;
+	Texture* caja;
 
 public:
 

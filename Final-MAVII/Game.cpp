@@ -10,18 +10,44 @@ Game::Game(int ancho, int alto, std::string titulo)
 	fps = 60;
 	wnd->setFramerateLimit(fps);
 	frameTime = 1.0f / fps;
+
+	fuente = new Font;
+	textContador = new Text;
+
+	fuente->loadFromFile("assets/arial.ttf");
+	textContador->setFont(*fuente);
+	textContador->setCharacterSize(15);
+	textContador->setPosition(5, 5);
+	textContador->setString("CONTADOR DE RAGDOLLS:" + std::to_string(contadorRagdolls));
+
+	
+	caja = new Texture;
+	caja->loadFromFile("assets/block.png");
+
+	cajaCorrecta1 = new Sprite;
+	cajaCorrecta1->setTexture(*caja);
+	cajaCorrecta1->setPosition(80,0.5);
+	
+	cajaCorrecta2 = new Sprite;
+	cajaCorrecta2->setTexture(*caja);
+	cajaCorrecta2->setPosition(85, 0.5);
+
+	cajaCorrecta3 = new Sprite;
+	cajaCorrecta3->setTexture(*caja);
+	cajaCorrecta3->setPosition(90, 0.5);
+
 	SetZoom();
 	InitPhysics();
 
 	//Textura y Sprite del fondo del nivel
 	textura1 = new Texture;
 	fondo = new Sprite;
-	textura1->loadFromFile("menuInicio.png");
+	textura1->loadFromFile("assets/menuInicio.png");
 	fondo->setTexture(*textura1);
 
 	textura2 = new Texture;
 	menuInfo = new Sprite;
-	textura2->loadFromFile("menuInfo.jpg");
+	textura2->loadFromFile("assets/menuInfo.jpg");
 	menuInfo->setTexture(*textura2);
 
 	MenuInicio();
@@ -30,6 +56,11 @@ Game::Game(int ancho, int alto, std::string titulo)
 	levelCompleted = false;
 
 	contadorRagdolls = 0;
+
+	
+
+	
+
 }
 
 //el clásico gameloop
@@ -137,6 +168,8 @@ void Game::Actualizar()
 	phyWorld->ClearForces();
 	phyWorld->DebugDraw();
 
+	textContador->setString("CONTADOR DE RAGDOLLS:" + std::to_string(contadorRagdolls));
+
 }
 //para dibujar objetos, no se usa pero lo dejamos para cuando hagamos el final con los sprites
 void Game::Dibujar()
@@ -152,6 +185,11 @@ void Game::Dibujar()
 	for (auto& ragdoll : ragdolls) {
 		ragdoll->Dibujar(*wnd); // Llama a la función que dibuja el sprite del torso
 	}
+
+	wnd->draw(*textContador);
+	wnd->draw(*cajaCorrecta1);
+	wnd->draw(*cajaCorrecta2);
+	wnd->draw(*cajaCorrecta3);
 
 }
 
@@ -240,6 +278,10 @@ void Game::SetZoom()
 	sf::Vector2u windowSize = wnd->getSize();
 	scaleX = viewSize.x / windowSize.x;
 	scaleY = viewSize.y / windowSize.y;
+	textContador->setScale(scaleX, scaleY);
+	cajaCorrecta1->setScale(0.4 * scaleX, 0.4 * scaleY);
+	cajaCorrecta2->setScale(0.4 * scaleX, 0.4 * scaleY);
+	cajaCorrecta3->setScale(0.4 * scaleX, 0.4 * scaleY);
 }
 
 void Game::InitPhysics()
@@ -266,13 +308,13 @@ void Game::InitPhysics()
 	techo->SetTransform(b2Vec2(50.0f, 0.0f), 0.0f);
 
 	//creamos dos obstáculos estáticos
-	b2Body* obstaculo1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 20, 2);
+	b2Body* obstaculo1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
 	obstaculo1->SetTransform(b2Vec2(60.0f, 20.0f), 0.0f);
 
-	b2Body* obstaculo2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 20, 2);
+	b2Body* obstaculo2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
 	obstaculo2->SetTransform(b2Vec2(60.0f, 40.0f), 0.0f);
 
-	b2Body* obstaculo3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 20, 2);
+	b2Body* obstaculo3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
 	obstaculo3->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
 
 	b2Body* obstaculo4 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 2, 20);
@@ -282,10 +324,10 @@ void Game::InitPhysics()
 
 
 	//creamos dos obstàculos dinámicos
-	b2Body* obstaculoD1 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 5, 10, 0.1f, 0.1f, 0.1f);
-	obstaculoD1->SetTransform(b2Vec2(60.0f, 70.0f), 0.0f);
+	b2Body* obstaculoD1 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
+	obstaculoD1->SetTransform(b2Vec2(60.0f, 10.0f), 0.0f);
 
-	b2Body* obstaculoD2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 5, 10, 0.1f, 0.1f, 0.1f);
+	b2Body* obstaculoD2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
 	obstaculoD2->SetTransform(b2Vec2(60.0f, 50.0f), 0.0f);
 
 
@@ -297,11 +339,11 @@ void Game::InitPhysics()
 	cannon = Box2DHelper::CreateRectangularStaticBody(phyWorld, 11, 1.2f);
 
 	//creamos el bloqueprueba
-	obstaPrueba	= Box2DHelper::CreateRectangularDynamicBody(phyWorld, 5, 10, 0.1f, 0.1f, 0.1f);
+	obstaPrueba	= Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
 	obstaPrueba->SetTransform(b2Vec2(60.0f, 30.0f), 0.0f);
 
 	//asignamos la textura al sprite y al avatar
-	t.loadFromFile("block.png");
+	t.loadFromFile("assets/block.png");
 	sf::Sprite* s = new sf::Sprite(t);
 	
 	m_Avatar = new Avatar(obstaPrueba, s);
