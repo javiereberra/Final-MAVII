@@ -21,19 +21,22 @@ Game::Game(int ancho, int alto, std::string titulo)
 	textContador->setString("CONTADOR DE RAGDOLLS:" + std::to_string(contadorRagdolls));
 
 	
-	caja = new Texture;
-	caja->loadFromFile("assets/block.png");
+	cajaCorrectaTx = new Texture;
+	cajaCorrectaTx->loadFromFile("assets/block.png");
+
+	cajaIncorrectaTx = new Texture;
+	cajaIncorrectaTx->loadFromFile("assets/block2.png");
 
 	cajaCorrecta1 = new Sprite;
-	cajaCorrecta1->setTexture(*caja);
+	cajaCorrecta1->setTexture(*cajaIncorrectaTx);
 	cajaCorrecta1->setPosition(80,0.5);
 	
 	cajaCorrecta2 = new Sprite;
-	cajaCorrecta2->setTexture(*caja);
+	cajaCorrecta2->setTexture(*cajaIncorrectaTx);
 	cajaCorrecta2->setPosition(85, 0.5);
 
 	cajaCorrecta3 = new Sprite;
-	cajaCorrecta3->setTexture(*caja);
+	cajaCorrecta3->setTexture(*cajaIncorrectaTx);
 	cajaCorrecta3->setPosition(90, 0.5);
 
 	SetZoom();
@@ -93,6 +96,42 @@ void Game::loop()
 		wnd->display();
 
 	}
+}
+
+bool Game::CajaEnZona1(b2Body* caja1) {
+	// Obtener la posición de la caja en el mundo de Box2D
+	b2Vec2 pos = caja1->GetPosition();
+
+	// Verificar si la posición de la caja está dentro de los límites de la zona (80, 80) a (100, 100)
+	if (pos.x >= 80 && pos.x <= 96 && pos.y >= 72 && pos.y <= 95) {
+		return true; // Está dentro de la zona
+	}
+
+	return false; // Fuera de la zona
+}
+
+bool Game::CajaEnZona2(b2Body* caja2) {
+	// Obtener la posición de la caja en el mundo de Box2D
+	b2Vec2 pos = caja2->GetPosition();
+
+	// Verificar si la posición de la caja está dentro de los límites de la zona (80, 80) a (100, 100)
+	if (pos.x >= 80 && pos.x <= 96 && pos.y >= 72 && pos.y <= 95) {
+		return true; // Está dentro de la zona
+	}
+
+	return false; // Fuera de la zona
+}
+
+bool Game::CajaEnZona3(b2Body* caja3) {
+	// Obtener la posición de la caja en el mundo de Box2D
+	b2Vec2 pos = caja3->GetPosition();
+
+	// Verificar si la posición de la caja está dentro de los límites de la zona (80, 80) a (100, 100)
+	if (pos.x >= 80 && pos.x <= 96 && pos.y >= 72 && pos.y <= 95) {
+		return true; // Está dentro de la zona
+	}
+
+	return false; // Fuera de la zona
 }
 
 void Game::Level1()
@@ -170,12 +209,28 @@ void Game::Actualizar()
 
 	textContador->setString("CONTADOR DE RAGDOLLS:" + std::to_string(contadorRagdolls));
 
+	if (CajaEnZona1(caja1)) {
+		cajaCorrecta1->setTexture(*cajaCorrectaTx);
+	}	
+
+	if (CajaEnZona2(caja2)) {
+		cajaCorrecta2->setTexture(*cajaCorrectaTx);
+	}
+
+	if (CajaEnZona3(caja3)) {
+		cajaCorrecta3->setTexture(*cajaCorrectaTx);
+	}
+
 }
 //para dibujar objetos, no se usa pero lo dejamos para cuando hagamos el final con los sprites
 void Game::Dibujar()
 {
-	m_Avatar->Actualizar();
-	m_Avatar->Dibujar(*wnd);
+	m_Avatar1->Actualizar();
+	m_Avatar1->Dibujar(*wnd);
+	m_Avatar2->Actualizar();
+	m_Avatar2->Dibujar(*wnd);
+	m_Avatar3->Actualizar();
+	m_Avatar3->Dibujar(*wnd);
 	
 
 	for (auto& ragdoll : ragdolls) {
@@ -242,6 +297,7 @@ void Game::Eventos()
 			wnd->close();
 			break;
 		case Event::MouseButtonPressed:
+		{
 			if (ragdolls.size() >= 5) {
 				// Eliminar el primer ragdoll si ya hay 5 ragdolls
 				delete ragdolls.front();
@@ -256,8 +312,19 @@ void Game::Eventos()
 			ragdolls.push_back(ragdoll);
 			contadorRagdolls++;
 			break;
-					
+		}
+		// COMPROBAR LAS POSICIONES //
+		case Event::KeyPressed:
+			if (evt.key.code == sf::Keyboard::Space) {
+				// Obtener la posición del objeto obstaPrueba en el mundo de Box2D
+				b2Vec2 position = caja1->GetPosition();
 
+				// Imprimir la posición en consola
+				std::cout << "obstaPrueba está en posición: (" << position.x << ", " << position.y << ")" << std::endl;
+
+				std::cout << "Posición del cursor: (" << worldMousePosition.x << ", " << worldMousePosition.y << ")" << std::endl;
+			}
+			break;
 		}
 	}
 
@@ -321,16 +388,7 @@ void Game::InitPhysics()
 	obstaculo4->SetTransform(b2Vec2(80.0f, 90.0f), 0.0f);
 
 
-
-
-	//creamos dos obstàculos dinámicos
-	b2Body* obstaculoD1 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	obstaculoD1->SetTransform(b2Vec2(60.0f, 10.0f), 0.0f);
-
-	b2Body* obstaculoD2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	obstaculoD2->SetTransform(b2Vec2(60.0f, 50.0f), 0.0f);
-
-
+	
 	//creamos la base del cañon
 	b2Body* cannon_base = Box2DHelper::CreateCircularStaticBody(phyWorld, 2);
 	cannon_base->SetTransform(b2Vec2(6.0f, 93.0f), 0.0f);
@@ -338,15 +396,25 @@ void Game::InitPhysics()
 	//creamos el cañon
 	cannon = Box2DHelper::CreateRectangularStaticBody(phyWorld, 11, 1.2f);
 
-	//creamos el bloqueprueba
-	obstaPrueba	= Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	obstaPrueba->SetTransform(b2Vec2(60.0f, 30.0f), 0.0f);
+	//creamos las cajas
+	caja1	= Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
+	caja1->SetTransform(b2Vec2(60.0f, 30.0f), 0.0f);
+
+	//creamos dos obstàculos dinámicos
+	caja2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
+	caja2->SetTransform(b2Vec2(60.0f, 10.0f), 0.0f);
+
+	caja3 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
+	caja3->SetTransform(b2Vec2(60.0f, 50.0f), 0.0f);
 
 	//asignamos la textura al sprite y al avatar
 	t.loadFromFile("assets/block.png");
 	sf::Sprite* s = new sf::Sprite(t);
 	
-	m_Avatar = new Avatar(obstaPrueba, s);
+	
+	m_Avatar1 = new Avatar(caja1, s);
+	m_Avatar2 = new Avatar(caja2, s);
+	m_Avatar3 = new Avatar(caja3, s);
 
 
 }

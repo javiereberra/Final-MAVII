@@ -36,10 +36,16 @@ private:
 
 	b2Body* cannon;
 
-	//prueba con sprite
-	b2Body* obstaPrueba;
+	//CAJAS con sprite
+	b2Body* caja1;
+	b2Body* caja2;
+	b2Body* caja3;
+
+
 	//avatar y su textura
-	Avatar* m_Avatar;
+	Avatar* m_Avatar1;
+	Avatar* m_Avatar2;
+	Avatar* m_Avatar3;
 	sf::Texture t;
 
 	//variables para medir la escala
@@ -62,7 +68,8 @@ private:
 	Sprite* cajaCorrecta1;
 	Sprite* cajaCorrecta2;
 	Sprite* cajaCorrecta3;
-	Texture* caja;
+	Texture* cajaCorrectaTx;
+	Texture* cajaIncorrectaTx;
 
 public:
 
@@ -87,6 +94,11 @@ public:
 
 	void MenuInicio();
 	void MenuInfo();
+	//NO LO USÉ TODAVIA
 	void MenuGameOver();
+
+	bool CajaEnZona1(b2Body* caja1);
+	bool CajaEnZona2(b2Body* caja2);
+	bool CajaEnZona3(b2Body* caja3);
 
 };
