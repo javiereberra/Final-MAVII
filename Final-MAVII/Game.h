@@ -36,13 +36,13 @@ private:
 
 	b2Body* cannon;
 
-	//CAJAS con sprite
+	//cuerpo de las CAJAS ?con sprite?
 	b2Body* caja1;
 	b2Body* caja2;
 	b2Body* caja3;
 
 
-	//avatar y su textura
+	//avatar y textura de cajas
 	Avatar* m_Avatar1;
 	Avatar* m_Avatar2;
 	Avatar* m_Avatar3;
@@ -59,12 +59,12 @@ private:
 	//lista de ragdolls
 	std::list<Ragdoll*> ragdolls;
 
-	//contador de Ragdolls
+	//contador de Ragdolls y texto
 	int contadorRagdolls;
 	Font* fuente;
 	Text* textContador;
 
-	//CAJAS CORRECTAS
+	//sprites y texturas para cajas correctas e incorrectas
 	Sprite* cajaCorrecta1;
 	Sprite* cajaCorrecta2;
 	Sprite* cajaCorrecta3;
@@ -72,33 +72,41 @@ private:
 	Texture* cajaIncorrectaTx;
 
 public:
-
+	//constructor y destructor
 	Game(int ancho, int alto, std::string titulo);
 	~Game(void);
+	//iniciar físicas
 	void InitPhysics();
 
-	//main gameloop
+	//main gameloop, dibujar, eventos y el setzoom para escalar la vista
 
 	void loop();
-	void Dibujar(); //realmente no se utiliza porque lo hace todo el sfmlrenderer pero lo dejamos para el final
+	void Dibujar();
 	void Actualizar();
 	void Eventos();
 	void SetZoom();
 
+	//metodos para los tres niveles
 	void Level1();
 	void Level2();
 	void Level3();
 
+	//avanzar de nivel y resetear nivel
 	void NextLevel();
 	void ResetLevel();
 
+	//menú de inicio, menú de informacion del juego
 	void MenuInicio();
 	void MenuInfo();
 	//NO LO USÉ TODAVIA
 	void MenuGameOver();
 
+	//para comprobar si las cajas están en la zona correcta
 	bool CajaEnZona1(b2Body* caja1);
 	bool CajaEnZona2(b2Body* caja2);
 	bool CajaEnZona3(b2Body* caja3);
+
+	//para cambiar los sprites cuando las cajas están correctas
+	void CajasCorrectas();
 
 };

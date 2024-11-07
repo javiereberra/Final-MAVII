@@ -88,8 +88,7 @@ Ragdoll::Ragdoll(b2World* world, const b2Vec2& position)
 }
 
 void Ragdoll::Actualizar() {
-    // Actualizar la física del ragdoll (si es necesario)
-
+    
     // Actualizar el avatar del torso
     avatarTorso->Actualizar();
 }
@@ -100,7 +99,11 @@ void Ragdoll::Dibujar(sf::RenderWindow& wnd) {
 }
 
 
+//para aplicarle la fuerza del cañon
 
+void Ragdoll::applyImpulse(const b2Vec2& impulse) {
+    torso->ApplyLinearImpulseToCenter(impulse, true);
+}
 
 //destructor
 
@@ -151,10 +154,3 @@ Ragdoll::~Ragdoll() {
         piernaI = nullptr;
     }
 }
-
-//para aplicarle la fuerza del cañon
-
-void Ragdoll::applyImpulse(const b2Vec2& impulse) {
-    torso->ApplyLinearImpulseToCenter(impulse, true);
-}
-

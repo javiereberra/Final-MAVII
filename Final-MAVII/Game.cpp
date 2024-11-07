@@ -2,28 +2,28 @@
 #include "Box2DHelper.h"
 #include <iostream>
 
-//constructor que define ventana, frames, la escala e inicia físicas
+//constructor 
 Game::Game(int ancho, int alto, std::string titulo)
 {
+	//definimos la ventana y el framerate
 	wnd = new RenderWindow(VideoMode(ancho, alto), titulo);
 	wnd->setVisible(true);
 	fps = 60;
 	wnd->setFramerateLimit(fps);
 	frameTime = 1.0f / fps;
 
+	//fuente y texto para el texto que cuenta los ragdolls
 	fuente = new Font;
 	textContador = new Text;
-
 	fuente->loadFromFile("assets/arial.ttf");
 	textContador->setFont(*fuente);
 	textContador->setCharacterSize(15);
 	textContador->setPosition(5, 5);
 	textContador->setString("CONTADOR DE RAGDOLLS:" + std::to_string(contadorRagdolls));
 
-	
+	//textura y sprites de los íconos de cajas correctas e incorrectas
 	cajaCorrectaTx = new Texture;
 	cajaCorrectaTx->loadFromFile("assets/block.png");
-
 	cajaIncorrectaTx = new Texture;
 	cajaIncorrectaTx->loadFromFile("assets/block2.png");
 
@@ -39,10 +39,12 @@ Game::Game(int ancho, int alto, std::string titulo)
 	cajaCorrecta3->setTexture(*cajaIncorrectaTx);
 	cajaCorrecta3->setPosition(90, 0.5);
 
+	//aplicar la escala
 	SetZoom();
+	//iniciar físicas
 	InitPhysics();
 
-	//Textura y Sprite del fondo del nivel
+	//Textura y Sprite del menú inicio y el menú de información
 	textura1 = new Texture;
 	fondo = new Sprite;
 	textura1->loadFromFile("assets/menuInicio.png");
@@ -53,19 +55,19 @@ Game::Game(int ancho, int alto, std::string titulo)
 	textura2->loadFromFile("assets/menuInfo.jpg");
 	menuInfo->setTexture(*textura2);
 
+	//ejecutar primero el menú inicio
 	MenuInicio();
 
+	//Establecer el nivel y su condición de incompleto
 	currentLevel = 1;
 	levelCompleted = false;
-
+	//Establecer el contador de ragdolls en cero
 	contadorRagdolls = 0;
 
-	
-
-	
+		
 
 }
-
+//-------------------------------------------------------------------------------SEGUIR COMENTANDO
 //el clásico gameloop
 void Game::loop()
 {
@@ -199,6 +201,29 @@ void Game::ResetLevel()
 	}
 	ragdolls.clear();
 }
+void Game::CajasCorrectas() 
+{
+	if (CajaEnZona1(caja1)) {
+		cajaCorrecta1->setTexture(*cajaCorrectaTx);
+	}
+	else {
+		cajaCorrecta1->setTexture(*cajaIncorrectaTx);
+	}
+
+	if (CajaEnZona2(caja2)) {
+		cajaCorrecta2->setTexture(*cajaCorrectaTx);
+	}
+	else {
+		cajaCorrecta2->setTexture(*cajaIncorrectaTx);
+	}
+
+	if (CajaEnZona3(caja3)) {
+		cajaCorrecta3->setTexture(*cajaCorrectaTx);
+	}
+	else {
+		cajaCorrecta3->setTexture(*cajaIncorrectaTx);
+	}
+}
 
 //actualiza el phyworld
 void Game::Actualizar()
@@ -209,17 +234,8 @@ void Game::Actualizar()
 
 	textContador->setString("CONTADOR DE RAGDOLLS:" + std::to_string(contadorRagdolls));
 
-	if (CajaEnZona1(caja1)) {
-		cajaCorrecta1->setTexture(*cajaCorrectaTx);
-	}	
-
-	if (CajaEnZona2(caja2)) {
-		cajaCorrecta2->setTexture(*cajaCorrectaTx);
-	}
-
-	if (CajaEnZona3(caja3)) {
-		cajaCorrecta3->setTexture(*cajaCorrectaTx);
-	}
+	CajasCorrectas();
+	
 
 }
 //para dibujar objetos, no se usa pero lo dejamos para cuando hagamos el final con los sprites
