@@ -10,7 +10,7 @@ Ragdoll::Ragdoll(b2World* world, const b2Vec2& position)
     torso->SetTransform(position, 0);
 
     //AVATAR
-    torsoTexture.loadFromFile("assets/block.png");
+    torsoTexture.loadFromFile("assets/torso2.png");
     sf::Sprite* s = new sf::Sprite(torsoTexture);
 
     avatarTorso = new Avatar(torso, s);
@@ -21,25 +21,56 @@ Ragdoll::Ragdoll(b2World* world, const b2Vec2& position)
     cabeza = Box2DHelper::CreateRectangularDynamicBody(world, 1.7f, 1.7f, 0.7f, 0.1, 0.1f);
     cabeza->SetTransform(cabezaPosition, 0);
 
+    //AVATAR
+    cabezaTexture.loadFromFile("assets/head2.png");
+    sf::Sprite* a = new sf::Sprite(cabezaTexture);
+
+    avatarCabeza = new Avatar(cabeza, a);
+
     // Crear brazo derecho
     b2Vec2 brazoDPosition = position + b2Vec2(1.5f, 2.0f); // Ajustar posición para que esté a la derecha
     brazoD = Box2DHelper::CreateRectangularDynamicBody(world, 0.7f, 2.5f, 0.7f, 0.1, 0.1f);
     brazoD->SetTransform(brazoDPosition, 0);
+
+    //AVATAR
+    brazoDTexture.loadFromFile("assets/brazo2.png");
+    sf::Sprite* bd = new sf::Sprite(brazoDTexture);
+
+    avatarBrazoD = new Avatar(brazoD, bd);
+
+
 
     // Crear brazo izquierdo
     b2Vec2 brazoIPosition = position + b2Vec2(-1.5f, 2.0f); // Ajustar posición para que esté a la izquierda
     brazoI = Box2DHelper::CreateRectangularDynamicBody(world, 0.7f, 2.5f, 0.7f, 0.1, 0.1f);
     brazoI->SetTransform(brazoIPosition, 0);
 
+    //AVATAR
+    brazoITexture.loadFromFile("assets/brazo1.png");
+    sf::Sprite* bi = new sf::Sprite(brazoITexture);
+
+    avatarBrazoI = new Avatar(brazoI, bi);
+
     // Crear pierna derecha
     b2Vec2 piernaDPosition = position + b2Vec2(0.75f, 6.0f); // Ajustar posición para que esté abajo a la derecha
     piernaD = Box2DHelper::CreateRectangularDynamicBody(world, 0.7f, 3.0f, 0.7f, 0.1, 0.1f);
     piernaD->SetTransform(piernaDPosition, 0);
 
+    //avatar
+    piernaTexture.loadFromFile("assets/leg.png");
+    sf::Sprite* pd = new sf::Sprite(piernaTexture);
+
+    avatarPiernaD = new Avatar(piernaD, pd);
+
     // Crear pierna izquierda
     b2Vec2 piernaIPosition = position + b2Vec2(-0.75f, 6.0f); // Ajustar posición para que esté abajo a la izquierda
     piernaI = Box2DHelper::CreateRectangularDynamicBody(world, 0.7f, 3.0f, 0.7f, 0.1, 0.1f);
     piernaI->SetTransform(piernaIPosition, 0);
+
+    sf::Sprite* pi = new sf::Sprite(piernaTexture);
+    avatarPiernaI = new Avatar(piernaI, pi);
+
+
 
         // Crear los joints
     b2RevoluteJointDef jointDef;
@@ -91,11 +122,21 @@ void Ragdoll::Actualizar() {
     
     // Actualizar el avatar del torso
     avatarTorso->Actualizar();
+    avatarCabeza->Actualizar();
+    avatarPiernaD->Actualizar();
+    avatarPiernaI->Actualizar();
+    avatarBrazoI->Actualizar();
+    avatarBrazoD->Actualizar();
 }
 
 void Ragdoll::Dibujar(sf::RenderWindow& wnd) {
     // Dibujar el avatar del torso
     avatarTorso->Dibujar(wnd);
+    avatarCabeza->Dibujar(wnd);
+    avatarPiernaD->Dibujar(wnd);
+    avatarPiernaI->Dibujar(wnd);
+    avatarBrazoD->Dibujar(wnd);
+    avatarBrazoI->Dibujar(wnd);
 }
 
 

@@ -400,8 +400,8 @@ void Game::InitPhysics()
 	b2Body* obstaculo3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
 	obstaculo3->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
 
-	b2Body* obstaculo4 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 2, 20);
-	obstaculo4->SetTransform(b2Vec2(80.0f, 90.0f), 0.0f);
+	b2Body* obstaculo4 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 2, 26);
+	obstaculo4->SetTransform(b2Vec2(80.0f, 83.0f), 0.0f);
 
 
 	

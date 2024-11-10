@@ -22,11 +22,33 @@ private:
     b2RevoluteJoint* jointRightLegTorso;
     b2RevoluteJoint* jointLeftLegTorso;
 
-    //AVATAR TORSO -- PRUEBA
+    //AVATAR TORSO
     Avatar* avatarTorso;
     // Textura y sprite para el torso
     Texture torsoTexture; 
     Sprite torsoSprite;
+
+    //AVATAR CABEZA
+    Avatar* avatarCabeza;
+    // Textura y sprite para el cabeza
+    Texture cabezaTexture;
+    Sprite cabezaSprite;
+
+    //AVATAR PIERNA
+    Avatar* avatarPiernaD;
+    Avatar* avatarPiernaI;
+    // Textura y sprite para el pierna
+    Texture piernaTexture;
+    Sprite piernaSprite;
+
+    //AVATAR BRAZOS
+    Avatar* avatarBrazoD;
+    Avatar* avatarBrazoI;
+    // Textura y sprite para el pierna
+    Texture brazoDTexture;
+    Texture brazoITexture;
+    Sprite brazoDSprite;
+    Sprite brazoISprite;
 
 
     b2World* world;
