@@ -36,6 +36,24 @@ private:
 
 	b2Body* cannon;
 
+	//cuerpo, avatar y textura piso
+	b2Body* piso;
+	Avatar* m_AvatarPiso;
+	sf::Texture pi;
+
+	//cuerpo, avatar y textura techo
+	b2Body* techo;
+	Avatar* m_AvatarTecho;
+	sf::Texture te;
+	//cuerpo, avatar y textura pared Izquierda
+	b2Body* paredI;
+	Avatar* m_AvatarParedI;
+	sf::Texture pz;
+	//cuerpo, avatar y textura pared Derecha
+	b2Body* paredD;
+	Avatar* m_AvatarParedD;
+	sf::Texture pd;
+
 	//cuerpo de las CAJAS ?con sprite?
 	b2Body* caja1;
 	b2Body* caja2;

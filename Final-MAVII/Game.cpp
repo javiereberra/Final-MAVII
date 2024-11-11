@@ -246,7 +246,15 @@ void Game::Dibujar()
 	m_Avatar2->Actualizar();
 	m_Avatar2->Dibujar(*wnd);
 	m_Avatar3->Actualizar();
-	m_Avatar3->Dibujar(*wnd);
+	m_Avatar3->Dibujar(*wnd);		
+	m_AvatarParedI->Actualizar();
+	m_AvatarParedI->Dibujar(*wnd);
+	m_AvatarParedD->Actualizar();
+	m_AvatarParedD->Dibujar(*wnd);
+	m_AvatarTecho->Actualizar();
+	m_AvatarTecho->Dibujar(*wnd);
+	m_AvatarPiso->Actualizar();
+	m_AvatarPiso->Dibujar(*wnd);
 	
 
 	for (auto& ragdoll : ragdolls) {
@@ -377,18 +385,43 @@ void Game::InitPhysics()
 	debugRender->SetFlags(UINT_MAX);
 	phyWorld->SetDebugDraw(debugRender);
 
-	//creamos un piso paredes y techo
-	b2Body* piso = Box2DHelper::CreateRectangularStaticBody(phyWorld, 100, 10);
+		//creamos un piso paredes y techo
+	//PISO
+	piso = Box2DHelper::CreateRectangularStaticBody(phyWorld, 100, 10);
 	piso->SetTransform(b2Vec2(50.0f, 100.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar
+	pi.loadFromFile("assets/piso.png");
+	sf::Sprite* p = new sf::Sprite(pi);
+	//avatar del piso
+	m_AvatarPiso = new Avatar(piso, p);
 
-	b2Body* paredI = Box2DHelper::CreateRectangularStaticBody(phyWorld, 10, 100);
+	//PARED IZQUIERDA
+	paredI = Box2DHelper::CreateRectangularStaticBody(phyWorld, 10, 100);
 	paredI->SetTransform(b2Vec2(00.0f, 50.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar
+	pz.loadFromFile("assets/paredI.png");
+	sf::Sprite* piz = new sf::Sprite(pz);
+	//avatar del pared izquierda
+	m_AvatarParedI = new Avatar(paredI, piz);
 
-	b2Body* paredD = Box2DHelper::CreateRectangularStaticBody(phyWorld, 10, 100);
+
+	//PARED DERECHA
+	paredD = Box2DHelper::CreateRectangularStaticBody(phyWorld, 10, 100);
 	paredD->SetTransform(b2Vec2(100.0f, 50.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar
+	pd.loadFromFile("assets/paredD.png");
+	sf::Sprite* pde = new sf::Sprite(pd);
+	//avatar del pared derecha
+	m_AvatarParedD = new Avatar(paredD, pde);
 
-	b2Body* techo = Box2DHelper::CreateRectangularStaticBody(phyWorld, 100, 10);
+	//TECHO
+	techo = Box2DHelper::CreateRectangularStaticBody(phyWorld, 100, 10);
 	techo->SetTransform(b2Vec2(50.0f, 0.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar
+	te.loadFromFile("assets/Techo.png");
+	sf::Sprite* tech = new sf::Sprite(te);
+	//avatar del pared derecha
+	m_AvatarTecho = new Avatar(techo, tech);
 
 	//creamos dos obstáculos estáticos
 	b2Body* obstaculo1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
