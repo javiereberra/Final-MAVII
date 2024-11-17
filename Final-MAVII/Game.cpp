@@ -258,6 +258,10 @@ void Game::Dibujar()
 	m_AvatarPiso->Dibujar(*wnd);
 	m_AvatarPlatf1->Actualizar();
 	m_AvatarPlatf1->Dibujar(*wnd);
+	m_AvatarPlatf2->Actualizar();
+	m_AvatarPlatf2->Dibujar(*wnd);
+	m_AvatarPlatf3->Actualizar();
+	m_AvatarPlatf3->Dibujar(*wnd);
 	
 
 	for (auto& ragdoll : ragdolls) {
@@ -436,12 +440,22 @@ void Game::InitPhysics()
 	m_AvatarPlatf1 = new Avatar(plataforma1, pfspr1);
 
 
+	plataforma2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
+	plataforma2->SetTransform(b2Vec2(60.0f, 40.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar
+	pf2.loadFromFile("assets/platform.png");
+	sf::Sprite* pfspr2 = new sf::Sprite(pf2);
+	//avatar del pared derecha
+	m_AvatarPlatf2 = new Avatar(plataforma2, pfspr2);
 
-	b2Body* obstaculo2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	obstaculo2->SetTransform(b2Vec2(60.0f, 40.0f), 0.0f);
 
-	b2Body* obstaculo3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	obstaculo3->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
+	plataforma3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
+	plataforma3->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar
+	pf3.loadFromFile("assets/platform.png");
+	sf::Sprite* pfspr3 = new sf::Sprite(pf3);
+	//avatar del pared derecha
+	m_AvatarPlatf3 = new Avatar(plataforma3, pfspr3);
 
 	b2Body* obstaculo4 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 2, 26);
 	obstaculo4->SetTransform(b2Vec2(80.0f, 83.0f), 0.0f);

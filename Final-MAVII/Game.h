@@ -55,10 +55,18 @@ private:
 	Avatar* m_AvatarParedD;
 	sf::Texture pd;
 
-	//cuerpo, avatar y textura plataforma
+	//cuerpo, avatar y textura las tres plataformas
 	b2Body* plataforma1;
 	Avatar* m_AvatarPlatf1;
 	sf::Texture pf1;
+
+	b2Body* plataforma2;
+	Avatar* m_AvatarPlatf2;
+	sf::Texture pf2;
+
+	b2Body* plataforma3;
+	Avatar* m_AvatarPlatf3;
+	sf::Texture pf3;
 
 	//cuerpo de las CAJAS con sprite
 	b2Body* caja1;
