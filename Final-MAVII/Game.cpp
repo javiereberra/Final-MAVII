@@ -262,6 +262,8 @@ void Game::Dibujar()
 	m_AvatarPlatf2->Dibujar(*wnd);
 	m_AvatarPlatf3->Actualizar();
 	m_AvatarPlatf3->Dibujar(*wnd);
+	m_AvatarCol1->Actualizar();
+	m_AvatarCol1->Dibujar(*wnd);
 	
 
 	for (auto& ragdoll : ragdolls) {
@@ -457,8 +459,15 @@ void Game::InitPhysics()
 	//avatar del pared derecha
 	m_AvatarPlatf3 = new Avatar(plataforma3, pfspr3);
 
-	b2Body* obstaculo4 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 2, 26);
-	obstaculo4->SetTransform(b2Vec2(80.0f, 83.0f), 0.0f);
+	
+
+	columna1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 2, 26);
+	columna1->SetTransform(b2Vec2(80.0f, 83.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar
+	col1.loadFromFile("assets/columna.png");
+	sf::Sprite* colspr1 = new sf::Sprite(col1);
+	//avatar del pared derecha
+	m_AvatarCol1 = new Avatar(columna1, colspr1);
 
 
 	

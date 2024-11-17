@@ -68,6 +68,12 @@ private:
 	Avatar* m_AvatarPlatf3;
 	sf::Texture pf3;
 
+	//cuerpo, avatar y textura de la columna
+	b2Body* columna1;
+	Avatar* m_AvatarCol1;
+	sf::Texture col1;
+
+
 	//cuerpo de las CAJAS con sprite
 	b2Body* caja1;
 	b2Body* caja2;
