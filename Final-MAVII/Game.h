@@ -40,38 +40,38 @@ private:
 	//cuerpo, avatar y textura piso
 	b2Body* piso;
 	Avatar* m_AvatarPiso;
-	sf::Texture pi;
+	Texture pi;
 
 	//cuerpo, avatar y textura techo
 	b2Body* techo;
 	Avatar* m_AvatarTecho;
-	sf::Texture te;
+	Texture te;
 	//cuerpo, avatar y textura pared Izquierda
 	b2Body* paredI;
 	Avatar* m_AvatarParedI;
-	sf::Texture pz;
+	Texture pz;
 	//cuerpo, avatar y textura pared Derecha
 	b2Body* paredD;
 	Avatar* m_AvatarParedD;
-	sf::Texture pd;
+	Texture pd;
 
 	//cuerpo, avatar y textura las tres plataformas
 	b2Body* plataforma1;
 	Avatar* m_AvatarPlatf1;
-	sf::Texture pf1;
+
+	Texture platText;
 
 	b2Body* plataforma2;
 	Avatar* m_AvatarPlatf2;
-	sf::Texture pf2;
-
+	
 	b2Body* plataforma3;
 	Avatar* m_AvatarPlatf3;
-	sf::Texture pf3;
+	
 
 	//cuerpo, avatar y textura de la columna
 	b2Body* columna1;
 	Avatar* m_AvatarCol1;
-	sf::Texture col1;
+	Texture col1;
 
 
 	//cuerpo de las CAJAS con sprite
@@ -84,7 +84,7 @@ private:
 	Avatar* m_Avatar1;
 	Avatar* m_Avatar2;
 	Avatar* m_Avatar3;
-	sf::Texture t;
+	Texture t;
 
 	//variables para medir la escala
 	float scaleX;

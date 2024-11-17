@@ -435,27 +435,25 @@ void Game::InitPhysics()
 	//PLATAFORMAS
 	plataforma1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
 	plataforma1->SetTransform(b2Vec2(60.0f, 20.0f), 0.0f);
-	//asignamos la textura al sprite y al avatar
-	pf1.loadFromFile("assets/platform.png");
-	sf::Sprite* pfspr1 = new sf::Sprite(pf1);
+	//asignamos la textura al sprite y al avatar	
+	platText.loadFromFile("assets/platform.png");	
+	sf::Sprite* pfspr1 = new sf::Sprite(platText);
 	//avatar del pared derecha
 	m_AvatarPlatf1 = new Avatar(plataforma1, pfspr1);
 
 
 	plataforma2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
 	plataforma2->SetTransform(b2Vec2(60.0f, 40.0f), 0.0f);
-	//asignamos la textura al sprite y al avatar
-	pf2.loadFromFile("assets/platform.png");
-	sf::Sprite* pfspr2 = new sf::Sprite(pf2);
+	//asignamos la textura al sprite y al avatar	
+	sf::Sprite* pfspr2 = new sf::Sprite(platText);
 	//avatar del pared derecha
 	m_AvatarPlatf2 = new Avatar(plataforma2, pfspr2);
 
 
 	plataforma3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
 	plataforma3->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
-	//asignamos la textura al sprite y al avatar
-	pf3.loadFromFile("assets/platform.png");
-	sf::Sprite* pfspr3 = new sf::Sprite(pf3);
+	//asignamos la textura al sprite y al avatar	
+	sf::Sprite* pfspr3 = new sf::Sprite(platText);
 	//avatar del pared derecha
 	m_AvatarPlatf3 = new Avatar(plataforma3, pfspr3);
 
