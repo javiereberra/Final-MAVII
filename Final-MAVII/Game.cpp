@@ -241,6 +241,7 @@ void Game::Actualizar()
 //para dibujar objetos, no se usa pero lo dejamos para cuando hagamos el final con los sprites
 void Game::Dibujar()
 {
+	// EVALUAR SI SON NECESARIOS LOS ACTUALIZAR DE LOS OBJETOS ESTÁTICOS?
 	m_Avatar1->Actualizar();
 	m_Avatar1->Dibujar(*wnd);
 	m_Avatar2->Actualizar();
@@ -255,6 +256,8 @@ void Game::Dibujar()
 	m_AvatarTecho->Dibujar(*wnd);
 	m_AvatarPiso->Actualizar();
 	m_AvatarPiso->Dibujar(*wnd);
+	m_AvatarPlatf1->Actualizar();
+	m_AvatarPlatf1->Dibujar(*wnd);
 	
 
 	for (auto& ragdoll : ragdolls) {
@@ -423,9 +426,16 @@ void Game::InitPhysics()
 	//avatar del pared derecha
 	m_AvatarTecho = new Avatar(techo, tech);
 
-	//creamos dos obstáculos estáticos
-	b2Body* obstaculo1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	obstaculo1->SetTransform(b2Vec2(60.0f, 20.0f), 0.0f);
+	//PLATAFORMAS
+	plataforma1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
+	plataforma1->SetTransform(b2Vec2(60.0f, 20.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar
+	pf1.loadFromFile("assets/platform.png");
+	sf::Sprite* pfspr1 = new sf::Sprite(pf1);
+	//avatar del pared derecha
+	m_AvatarPlatf1 = new Avatar(plataforma1, pfspr1);
+
+
 
 	b2Body* obstaculo2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
 	obstaculo2->SetTransform(b2Vec2(60.0f, 40.0f), 0.0f);

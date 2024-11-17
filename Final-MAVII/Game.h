@@ -7,6 +7,7 @@
 #include <list>
 
 using namespace sf;
+// CLASE JUEGO //
 
 class Game
 {
@@ -25,7 +26,7 @@ private:
 	float frameTime;
 	int fps;
 
-	//Textura y sprite para el fondo
+	//Textura y sprite para los fondos de menuinicio y menuinfo
 	Texture* textura1;
 	Sprite* fondo;
 	Texture* textura2;
@@ -54,7 +55,12 @@ private:
 	Avatar* m_AvatarParedD;
 	sf::Texture pd;
 
-	//cuerpo de las CAJAS ?con sprite?
+	//cuerpo, avatar y textura plataforma
+	b2Body* plataforma1;
+	Avatar* m_AvatarPlatf1;
+	sf::Texture pf1;
+
+	//cuerpo de las CAJAS con sprite
 	b2Body* caja1;
 	b2Body* caja2;
 	b2Body* caja3;
