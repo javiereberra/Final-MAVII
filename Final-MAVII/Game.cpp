@@ -264,6 +264,12 @@ void Game::Dibujar()
 	m_AvatarPlatf3->Dibujar(*wnd);
 	m_AvatarCol1->Actualizar();
 	m_AvatarCol1->Dibujar(*wnd);
+
+	m_AvatarCannon->Actualizar();
+	m_AvatarCannon->Dibujar(*wnd);
+
+	m_AvatarBaseCannon->Actualizar();
+	m_AvatarBaseCannon->Dibujar(*wnd);
 	
 
 	for (auto& ragdoll : ragdolls) {
@@ -311,6 +317,7 @@ void Game::Eventos()
 
 	//el cañon rota al ángulo en que se encuentra el cursor
 	cannon->SetTransform(b2Vec2(6.0f, 93.0f), angle);
+
 
 	//la mitad aproximada de la longitud del cañon para obtener la punta
 	float cannonLargo = 5.5f;
@@ -470,11 +477,22 @@ void Game::InitPhysics()
 
 	
 	//creamos la base del cañon
-	b2Body* cannon_base = Box2DHelper::CreateCircularStaticBody(phyWorld, 2);
-	cannon_base->SetTransform(b2Vec2(6.0f, 93.0f), 0.0f);
+	BaseCannon = Box2DHelper::CreateCircularStaticBody(phyWorld, 2);
+	BaseCannon->SetTransform(b2Vec2(6.0f, 93.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar
+	BaseCanonText.loadFromFile("assets/base1.png");
+	sf::Sprite* baseCanonSpr = new sf::Sprite(BaseCanonText);
+	//avatar del pared derecha
+	m_AvatarBaseCannon = new Avatar(BaseCannon, baseCanonSpr);
+
 
 	//creamos el cañon
-	cannon = Box2DHelper::CreateRectangularStaticBody(phyWorld, 11, 1.2f);
+	cannon = Box2DHelper::CreateRectangularStaticBody(phyWorld, 8, 1.8f);
+	canonText.loadFromFile("assets/cannon3.png");
+	sf::Sprite* canonSpr = new sf::Sprite(canonText);
+	
+	m_AvatarCannon = new Avatar(cannon, canonSpr);
+
 
 	//creamos las cajas
 	caja1	= Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);

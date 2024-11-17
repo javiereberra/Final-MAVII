@@ -34,8 +34,13 @@ private:
 
 
 	//cuerpo del cañon
-
 	b2Body* cannon;
+	Avatar* m_AvatarCannon;
+	Texture canonText;
+
+	b2Body* BaseCannon;
+	Avatar* m_AvatarBaseCannon;
+	Texture BaseCanonText;
 
 	//cuerpo, avatar y textura piso
 	b2Body* piso;
