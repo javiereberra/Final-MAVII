@@ -123,9 +123,7 @@ public:
 	~Game(void);
 	//iniciar físicas
 	void InitPhysics();
-	void InitPhysicsLevel1();
-	void InitPhysicsLevel2();
-	void InitPhysicsLevel3();
+	
 
 	//main gameloop, dibujar, eventos y el setzoom para escalar la vista
 
@@ -143,7 +141,7 @@ public:
 	//avanzar de nivel y resetear nivel
 	void NextLevel();
 	void ResetLevel();
-	void LevelPhysics();
+	
 
 	//menú de inicio, menú de informacion del juego
 	void MenuInicio();
