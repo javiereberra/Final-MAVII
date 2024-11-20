@@ -2,7 +2,12 @@
 #include "Box2DHelper.h"
 #include <iostream>
 
-//	  FALTA APRENDER A LIMPIAR EL NIVEL 1 - LAS CAJAS DEBERÍAN ESTAR SIEMPRE POR LO TANTO PASARLAS A INITPHYSICS()
+//	ARREGLAR Y VOLVER A EL FUNCIONAMIENTO DE NIVEL 1
+// OTRO METODO ES USAR VARIABLES PARA LAS POSICIONES DE LAS CAJAS Y CAMBIARLAS CUANDO CAMBIA EL NIVEL
+//  INTENTAR NO PERDER ESTADO DE B2WORLD Y SÓLO LIMPIAR Y MODIFIAR OBJETOS
+//  
+// 
+// 	  FALTA APRENDER A LIMPIAR EL NIVEL 1 - LAS CAJAS DEBERÍAN ESTAR SIEMPRE POR LO TANTO PASARLAS A INITPHYSICS()
 //     FALTAN NIVEL 2 Y NIVEL 3
 //    FALTA PULLEY JOINT (DOS POLEAS)
 //    FALTA PRISMATIC JOINT (HILO QUE CUELGA)
@@ -79,7 +84,7 @@ Game::Game(int ancho, int alto, std::string titulo)
 	//Establecer el contador de ragdolls en cero
 	contadorRagdolls = 0;
 
-	LevelPhysics();
+	
 
 		
 
@@ -118,20 +123,6 @@ void Game::loop()
 	}
 }
 
-void Game::LevelPhysics() {
-
-	switch (currentLevel) {
-	case 1:
-		InitPhysicsLevel1();
-		break;
-	case 2:
-		InitPhysicsLevel2();
-		break;
-	case 3:
-		InitPhysicsLevel1();
-		break;
-	}
-}
 
 bool Game::CajaEnZona1(b2Body* caja1) {
 	// Obtener la posición de la caja en el mundo de Box2D
@@ -170,8 +161,7 @@ bool Game::CajaEnZona3(b2Body* caja3) {
 }
 
 void Game::Level1()
-{
-	
+{	
 	// Lógica de actualización del nivel 1
 	Actualizar(); // Actualiza las físicas del mundo, objetos, etc.
 
@@ -187,7 +177,6 @@ void Game::Level1()
 
 void Game::Level2()
 {
-	//InitPhysics2();
 	// Lógica de actualización del nivel 2
 	Actualizar();
 	// Dibujar objetos del nivel 2
@@ -203,7 +192,7 @@ void Game::Level2()
 // Método para el tercer nivel
 void Game::Level3()
 {
-	//InitPhysics3();
+	
 	// Lógica de actualización del nivel 3
 	Actualizar();
 	Dibujar();
@@ -477,7 +466,30 @@ void Game::InitPhysics()
 	//avatar del pared derecha
 	m_AvatarTecho = new Avatar(techo, tech);
 
-	                       
+	//        PLATAFORMAS
+	plataforma1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
+	plataforma1->SetTransform(b2Vec2(60.0f, 20.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar	
+	platText.loadFromFile("assets/platform.png");
+	sf::Sprite* pfspr1 = new sf::Sprite(platText);
+	//avatar del pared derecha
+	m_AvatarPlatf1 = new Avatar(plataforma1, pfspr1);
+
+
+	plataforma2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
+	plataforma2->SetTransform(b2Vec2(60.0f, 40.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar	
+	sf::Sprite* pfspr2 = new sf::Sprite(platText);
+	//avatar del pared derecha
+	m_AvatarPlatf2 = new Avatar(plataforma2, pfspr2);
+
+
+	plataforma3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
+	plataforma3->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar	
+	sf::Sprite* pfspr3 = new sf::Sprite(platText);
+	//avatar del pared derecha
+	m_AvatarPlatf3 = new Avatar(plataforma3, pfspr3);                
 	
 
 	columna1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 2, 26);
@@ -507,164 +519,33 @@ void Game::InitPhysics()
 	
 	m_AvatarCannon = new Avatar(cannon, canonSpr);
 
-
-	//CONTENIDO VARIABLE
-
-		//        PLATAFORMAS
-	//plataforma1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	//plataforma1->SetTransform(b2Vec2(60.0f, 20.0f), 0.0f);
-		//asignamos la textura al sprite y al avatar	
-	//platText.loadFromFile("assets/platform.png");
-	//sf::Sprite* pfspr1 = new sf::Sprite(platText);
-		//avatar del pared derecha
-	//m_AvatarPlatf1 = new Avatar(plataforma1, pfspr1);
-
-
-	//plataforma2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	//plataforma2->SetTransform(b2Vec2(60.0f, 40.0f), 0.0f);
-		//asignamos la textura al sprite y al avatar	
-	//sf::Sprite* pfspr2 = new sf::Sprite(platText);
-		//avatar del pared derecha
-	//m_AvatarPlatf2 = new Avatar(plataforma2, pfspr2);
-
-
-	//plataforma3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	//plataforma3->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
-		//asignamos la textura al sprite y al avatar	
-	//sf::Sprite* pfspr3 = new sf::Sprite(platText);
-		//avatar del pared derecha
-	//m_AvatarPlatf3 = new Avatar(plataforma3, pfspr3);
-
+	
 
 			//creamos las cajas
-	//caja1	= Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	//caja1->SetTransform(b2Vec2(60.0f, 30.0f), 0.0f);
+	caja1	= Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
+	caja1->SetTransform(b2Vec2(60.0f, 30.0f), 0.0f);
+	
 
-		//creamos dos obstàculos dinámicos
-	//caja2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	//caja2->SetTransform(b2Vec2(60.0f, 10.0f), 0.0f);
+	
+	caja2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
+	caja2->SetTransform(b2Vec2(60.0f, 10.0f), 0.0f);
 
-	//caja3 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	//caja3->SetTransform(b2Vec2(60.0f, 50.0f), 0.0f);
+	caja3 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
+	caja3->SetTransform(b2Vec2(60.0f, 50.0f), 0.0f);
 
 		//asignamos la textura al sprite y al avatar
-	//t.loadFromFile("assets/block.png");
-	//sf::Sprite* s = new sf::Sprite(t);
-	
-	
-	//m_Avatar1 = new Avatar(caja1, s);
-	//m_Avatar2 = new Avatar(caja2, s);
-	//m_Avatar3 = new Avatar(caja3, s);
-
-
-}
-
-void Game::InitPhysicsLevel1() {
-
-
-	//        PLATAFORMAS
-	plataforma1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	plataforma1->SetTransform(b2Vec2(60.0f, 20.0f), 0.0f);
-	//asignamos la textura al sprite y al avatar	
-	platText.loadFromFile("assets/platform.png");
-	sf::Sprite* pfspr1 = new sf::Sprite(platText);
-	//avatar del pared derecha
-	m_AvatarPlatf1 = new Avatar(plataforma1, pfspr1);
-
-
-	plataforma2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	plataforma2->SetTransform(b2Vec2(60.0f, 40.0f), 0.0f);
-	//asignamos la textura al sprite y al avatar	
-	sf::Sprite* pfspr2 = new sf::Sprite(platText);
-	//avatar del pared derecha
-	m_AvatarPlatf2 = new Avatar(plataforma2, pfspr2);
-
-
-	plataforma3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	plataforma3->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
-	//asignamos la textura al sprite y al avatar	
-	sf::Sprite* pfspr3 = new sf::Sprite(platText);
-	//avatar del pared derecha
-	m_AvatarPlatf3 = new Avatar(plataforma3, pfspr3);
-
-
-	//creamos las cajas
-	caja1 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	caja1->SetTransform(b2Vec2(60.0f, 30.0f), 0.0f);
-
-	//creamos dos obstàculos dinámicos
-	caja2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	caja2->SetTransform(b2Vec2(60.0f, 10.0f), 0.0f);
-
-	caja3 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	caja3->SetTransform(b2Vec2(60.0f, 50.0f), 0.0f);
-
-	//asignamos la textura al sprite y al avatar
 	t.loadFromFile("assets/block.png");
 	sf::Sprite* s = new sf::Sprite(t);
-
-
+	
+	
 	m_Avatar1 = new Avatar(caja1, s);
 	m_Avatar2 = new Avatar(caja2, s);
 	m_Avatar3 = new Avatar(caja3, s);
 
 
-
 }
 
 
-void Game::InitPhysicsLevel2() {
-
-
-	//        PLATAFORMAS
-	plataforma1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	plataforma1->SetTransform(b2Vec2(60.0f, 20.0f), 0.0f);
-	//asignamos la textura al sprite y al avatar	
-	platText.loadFromFile("assets/platform.png");
-	sf::Sprite* pfspr1 = new sf::Sprite(platText);
-	//avatar del pared derecha
-	m_AvatarPlatf1 = new Avatar(plataforma1, pfspr1);
-
-
-	plataforma2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	plataforma2->SetTransform(b2Vec2(60.0f, 40.0f), 0.0f);
-	//asignamos la textura al sprite y al avatar	
-	sf::Sprite* pfspr2 = new sf::Sprite(platText);
-	//avatar del pared derecha
-	m_AvatarPlatf2 = new Avatar(plataforma2, pfspr2);
-
-
-	plataforma3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	plataforma3->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
-	//asignamos la textura al sprite y al avatar	
-	sf::Sprite* pfspr3 = new sf::Sprite(platText);
-	//avatar del pared derecha
-	m_AvatarPlatf3 = new Avatar(plataforma3, pfspr3);
-
-
-	//creamos las cajas
-	caja1 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	caja1->SetTransform(b2Vec2(60.0f, 30.0f), 0.0f);
-
-	//creamos dos obstàculos dinámicos
-	caja2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	caja2->SetTransform(b2Vec2(60.0f, 10.0f), 0.0f);
-
-	caja3 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	caja3->SetTransform(b2Vec2(60.0f, 50.0f), 0.0f);
-
-	//asignamos la textura al sprite y al avatar
-	t.loadFromFile("assets/block.png");
-	sf::Sprite* s = new sf::Sprite(t);
-
-
-	m_Avatar1 = new Avatar(caja1, s);
-	m_Avatar2 = new Avatar(caja2, s);
-	m_Avatar3 = new Avatar(caja3, s);
-
-
-
-}
 
 
 void Game::MenuInicio() {
