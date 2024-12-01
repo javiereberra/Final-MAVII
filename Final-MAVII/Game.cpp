@@ -305,6 +305,15 @@ void Game::Dibujar()
 		m_AvatarPlatf3->Dibujar(*wnd);
 	}
 
+	if (currentLevel == 2) {
+		m_AvatarAscens1->Actualizar();
+		m_AvatarAscens1->Dibujar(*wnd);
+		m_AvatarAscens2->Actualizar();
+		m_AvatarAscens2->Dibujar(*wnd);
+		
+	}
+
+
 	m_AvatarCol1->Actualizar();
 	m_AvatarCol1->Dibujar(*wnd);
 
@@ -571,6 +580,19 @@ void Game::InitPhysicsLevel1(){
 }
 
 void Game::InitPhysicsLevel2() {
+
+	ascensor1 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 10, 5, 1.0f, 1.0f, 1.0f);
+	ascensor1->SetTransform(b2Vec2(30.0f, 70.0f), 0.0f);
+	ascensor2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 4, 30, 1.0f, 1.0f, 1.0f);
+	ascensor2->SetTransform(b2Vec2(70.0f, 70.0f), 0.0f);
+
+	b2PulleyJoint* pJoint = Box2DHelper::CreatePulleyJoint(phyWorld, ascensor1, ascensor1->GetWorldCenter(), b2Vec2(30.0f, 0.0f),
+	ascensor2, ascensor2->GetWorldCenter(), b2Vec2(70.0f, 0.0f), 1.0f);
+
+	sf::Sprite* acspr1 = new sf::Sprite(platText);
+	m_AvatarAscens1 = new Avatar(ascensor1, acspr1);
+	sf::Sprite* acspr2 = new sf::Sprite(platText);
+	m_AvatarAscens2 = new Avatar(ascensor2, acspr2);
 
 }
 

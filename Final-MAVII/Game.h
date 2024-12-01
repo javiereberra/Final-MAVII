@@ -63,18 +63,7 @@ private:
 	Avatar* m_AvatarParedD;
 	Texture pd;
 
-	//cuerpo, avatar y textura las tres plataformas
-	b2Body* plataforma1;
-	Avatar* m_AvatarPlatf1;
-
-	Texture platText;
-
-	b2Body* plataforma2;
-	Avatar* m_AvatarPlatf2;
-	
-	b2Body* plataforma3;
-	Avatar* m_AvatarPlatf3;
-	
+		
 
 	//cuerpo, avatar y textura de la columna
 	b2Body* columna1;
@@ -93,6 +82,28 @@ private:
 	Avatar* m_Avatar2;
 	Avatar* m_Avatar3;
 	Texture t;
+
+	//cuerpo, avatar y textura las tres plataformas LEVEL1
+	b2Body* plataforma1;
+	Avatar* m_AvatarPlatf1;
+
+	Texture platText;
+
+	b2Body* plataforma2;
+	Avatar* m_AvatarPlatf2;
+
+	b2Body* plataforma3;
+	Avatar* m_AvatarPlatf3;
+
+	//LEVEL 2, cuerpo, avatares de pulley joint
+	b2Body* ascensor1;
+	Avatar* m_AvatarAscens1;
+
+	b2Body* ascensor2;
+	Avatar* m_AvatarAscens2;
+
+
+
 
 	//variables para medir la escala
 	float scaleX;

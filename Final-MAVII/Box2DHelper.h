@@ -269,4 +269,19 @@ public:
 
 		return body;
 	}
+
+	//-------------------------------------------------------------
+	// Una Pulley Joint entre dos cuerpos
+	//-------------------------------------------------------------
+	static b2PulleyJoint* CreatePulleyJoint(b2World* phyWorld, b2Body* first, b2Vec2 anchorFirst, b2Vec2 worldAnchor1,
+		b2Body* second, b2Vec2 anchorSecond, b2Vec2 worldAnchor2, float ratio)
+	{
+		b2PulleyJointDef jointDef;
+		jointDef.Initialize(first, second, worldAnchor1, worldAnchor2, anchorFirst, anchorSecond, ratio);
+
+		b2PulleyJoint* pullJoint = (b2PulleyJoint*)phyWorld->CreateJoint(&jointDef);
+		return pullJoint;
+	}
+
+
 };
