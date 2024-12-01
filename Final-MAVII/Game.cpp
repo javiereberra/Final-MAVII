@@ -3,9 +3,8 @@
 #include <iostream>
 
 //	2 NIVEL
-//	HAY QUE AJUSTAR LA POSICIÓN DE LAS CAJAS A 80
-//  HAY QUE CREAR PLATAFORMA 4 PARA EL NIVEL 2 Y EVITAR QUE LA COLUMNA GOLPEE LAS CAJAS
-//  
+//	hay que afinar el nivel
+//  HACER NIVEL 3 CON LOS DEMÁS JOINTS
 // 
 // 	  
 //     FALTAN NIVEL 2 Y NIVEL 3
@@ -601,16 +600,16 @@ void Game::InitPhysicsLevel1(){
 
 void Game::InitPhysicsLevel2() {
 
-	ascensor1Base = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 10, 5, 1.0f, 1.0f, 1.0f);
+	ascensor1Base = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 10, 3, 1.0f, 1.0f, 1.0f);
 	ascensor1Base->SetTransform(b2Vec2(50.0f, 50.0f), 0.0f);
-	ascensor1Col = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 3, 15, 1.0f, 1.0f, 1.0f);
+	ascensor1Col = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 2, 11, 1.0f, 1.0f, 1.0f);
 	ascensor1Col->SetTransform(b2Vec2(55.0f, 45.0f), 0.0f);
-	ascensor1Col2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 3, 15, 1.0f, 1.0f, 1.0f);
+	ascensor1Col2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 2, 11, 1.0f, 1.0f, 1.0f);
 	ascensor1Col2->SetTransform(b2Vec2(45.0f, 45.0f), 0.0f);
 
 	ascensor1Base->SetFixedRotation(true);
 
-	ascensor2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 4, 35, 1.0f, 1.0f, 1.0f);
+	ascensor2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 2, 37, 1.0f, 1.0f, 1.0f);
 	ascensor2->SetTransform(b2Vec2(60.0f, 50.0f), 0.0f);
 
 	ascensor2->SetFixedRotation(true);
