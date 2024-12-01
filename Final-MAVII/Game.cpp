@@ -2,9 +2,9 @@
 #include "Box2DHelper.h"
 #include <iostream>
 
-//	ARREGLAR Y VOLVER A EL FUNCIONAMIENTO DE NIVEL 1
-// OTRO METODO ES USAR VARIABLES PARA LAS POSICIONES DE LAS CAJAS Y CAMBIARLAS CUANDO CAMBIA EL NIVEL
-//  INTENTAR NO PERDER ESTADO DE B2WORLD Y SÓLO LIMPIAR Y MODIFIAR OBJETOS
+//	CON ESTE MÉTODO LAS PLATAFORMAS FÍSICAS FUNCIONAN EN CADA NIVEL
+//	PERO EL DIBUJADO FALLA
+// 
 //  
 // 
 // 	  FALTA APRENDER A LIMPIAR EL NIVEL 1 - LAS CAJAS DEBERÍAN ESTAR SIEMPRE POR LO TANTO PASARLAS A INITPHYSICS()
@@ -70,10 +70,13 @@ Game::Game(int ancho, int alto, std::string titulo)
 	textura3->loadFromFile("assets/background.png");
 	factory->setTexture(*textura3);
 
+	box1positionX = 60.0f;
+
 	//aplicar la escala
 	SetZoom();
 	//iniciar físicas
 	InitPhysics();
+	InitPhysicsLevel1();
 
 	//ejecutar primero el menú inicio
 	MenuInicio();
@@ -83,6 +86,10 @@ Game::Game(int ancho, int alto, std::string titulo)
 	levelCompleted = false;
 	//Establecer el contador de ragdolls en cero
 	contadorRagdolls = 0;
+
+	//PRUEBA POSICIONES CAJAS
+
+	
 
 	
 
@@ -104,8 +111,9 @@ void Game::loop()
 			
 			Level1();			
 			break;
-		case 2:
+		case 2:			
 			Level2();
+			
 			break;
 		case 3:
 			Level3();
@@ -172,11 +180,13 @@ void Game::Level1()
 	if (contadorRagdolls >= 10) {
 		levelCompleted = true;
 		NextLevel(); // Pasamos al siguiente nivel
+		InitPhysicsLevel2();
 	}
 }
 
 void Game::Level2()
 {
+	
 	// Lógica de actualización del nivel 2
 	Actualizar();
 	// Dibujar objetos del nivel 2
@@ -186,6 +196,7 @@ void Game::Level2()
 	if (contadorRagdolls >= 20) {
 		levelCompleted = true;
 		NextLevel();
+		InitPhysicsLevel3();
 	}
 }
 
@@ -206,6 +217,7 @@ void Game::Level3()
 void Game::NextLevel()
 {
 	if (levelCompleted) {
+		
 		currentLevel++; // Incrementamos el nivel actual
 		ResetLevel(); // Reiniciar los parámetros del nuevo nivel
 	}
@@ -213,7 +225,11 @@ void Game::NextLevel()
 
 void Game::ResetLevel()
 {
-	
+	// LOGICA DE LA POSICION DE LAS CAJAS SEGÚN EL NIVEL
+	// 
+	// 
+	// 
+	// 
 	// Aquí puedes restablecer el estado de los objetos para el nuevo nivel
 	InitPhysics(); // Por ejemplo, reiniciar las físicas
 	SetZoom();     // Reajustar la cámara si es necesario
@@ -282,12 +298,13 @@ void Game::Dibujar()
 	m_AvatarTecho->Dibujar(*wnd);
 	m_AvatarPiso->Actualizar();
 	m_AvatarPiso->Dibujar(*wnd);
-	m_AvatarPlatf1->Actualizar();
-	m_AvatarPlatf1->Dibujar(*wnd);
-	m_AvatarPlatf2->Actualizar();
-	m_AvatarPlatf2->Dibujar(*wnd);
-	m_AvatarPlatf3->Actualizar();
-	m_AvatarPlatf3->Dibujar(*wnd);
+	
+	if (currentLevel == 1) {
+		m_AvatarPlatf1->Dibujar(*wnd);
+		m_AvatarPlatf2->Dibujar(*wnd);
+		m_AvatarPlatf3->Dibujar(*wnd);
+	}
+
 	m_AvatarCol1->Actualizar();
 	m_AvatarCol1->Dibujar(*wnd);
 
@@ -416,6 +433,8 @@ void Game::SetZoom()
 	cajaCorrecta2->setScale(0.4 * scaleX, 0.4 * scaleY);
 	cajaCorrecta3->setScale(0.4 * scaleX, 0.4 * scaleY);
 	factory->setScale(1.6 * scaleX, 1.6 * scaleY);
+
+	
 }
 
 void Game::InitPhysics()
@@ -466,30 +485,7 @@ void Game::InitPhysics()
 	//avatar del pared derecha
 	m_AvatarTecho = new Avatar(techo, tech);
 
-	//        PLATAFORMAS
-	plataforma1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	plataforma1->SetTransform(b2Vec2(60.0f, 20.0f), 0.0f);
-	//asignamos la textura al sprite y al avatar	
-	platText.loadFromFile("assets/platform.png");
-	sf::Sprite* pfspr1 = new sf::Sprite(platText);
-	//avatar del pared derecha
-	m_AvatarPlatf1 = new Avatar(plataforma1, pfspr1);
-
-
-	plataforma2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	plataforma2->SetTransform(b2Vec2(60.0f, 40.0f), 0.0f);
-	//asignamos la textura al sprite y al avatar	
-	sf::Sprite* pfspr2 = new sf::Sprite(platText);
-	//avatar del pared derecha
-	m_AvatarPlatf2 = new Avatar(plataforma2, pfspr2);
-
-
-	plataforma3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
-	plataforma3->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
-	//asignamos la textura al sprite y al avatar	
-	sf::Sprite* pfspr3 = new sf::Sprite(platText);
-	//avatar del pared derecha
-	m_AvatarPlatf3 = new Avatar(plataforma3, pfspr3);                
+		        
 	
 
 	columna1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 2, 26);
@@ -520,10 +516,10 @@ void Game::InitPhysics()
 	m_AvatarCannon = new Avatar(cannon, canonSpr);
 
 	
-
+	//PRUEBA
 			//creamos las cajas
 	caja1	= Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	caja1->SetTransform(b2Vec2(60.0f, 30.0f), 0.0f);
+	caja1->SetTransform(b2Vec2(box1positionX, 30.0f), 0.0f);
 	
 
 	
@@ -545,7 +541,41 @@ void Game::InitPhysics()
 
 }
 
+void Game::InitPhysicsLevel1(){
 
+	plataforma1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
+	plataforma1->SetTransform(b2Vec2(60.0f, 20.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar	
+	platText.loadFromFile("assets/platform.png");
+	sf::Sprite* pfspr1 = new sf::Sprite(platText);
+	//avatar del pared derecha
+	m_AvatarPlatf1 = new Avatar(plataforma1, pfspr1);
+
+
+
+	plataforma2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
+	plataforma2->SetTransform(b2Vec2(60.0f, 40.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar	
+	sf::Sprite* pfspr2 = new sf::Sprite(platText);
+	//avatar del pared derecha
+	m_AvatarPlatf2 = new Avatar(plataforma2, pfspr2);
+
+
+	plataforma3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
+	plataforma3->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar	
+	sf::Sprite* pfspr3 = new sf::Sprite(platText);
+	//avatar del pared derecha
+	m_AvatarPlatf3 = new Avatar(plataforma3, pfspr3);
+
+}
+
+void Game::InitPhysicsLevel2() {
+
+}
+
+void Game::InitPhysicsLevel3() {
+}
 
 
 void Game::MenuInicio() {

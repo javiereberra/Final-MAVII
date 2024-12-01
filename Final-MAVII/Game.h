@@ -117,12 +117,19 @@ private:
 	Texture* cajaCorrectaTx;
 	Texture* cajaIncorrectaTx;
 
+
+	//PRUEBA POSICIONES DE CAJA
+	float box1positionX;
+
 public:
 	//constructor y destructor
 	Game(int ancho, int alto, std::string titulo);
 	~Game(void);
 	//iniciar físicas
 	void InitPhysics();
+	void InitPhysicsLevel1();
+	void InitPhysicsLevel2();
+	void InitPhysicsLevel3();
 	
 
 	//main gameloop, dibujar, eventos y el setzoom para escalar la vista
