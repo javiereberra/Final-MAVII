@@ -70,7 +70,9 @@ Game::Game(int ancho, int alto, std::string titulo)
 	textura3->loadFromFile("assets/background.png");
 	factory->setTexture(*textura3);
 
-	box1positionX = 80.0f;
+	box1positionX = 60.0f;
+	box2positionX = 60.0f;
+	box3positionX = 60.0f;
 
 	//aplicar la escala
 	SetZoom();
@@ -168,6 +170,19 @@ bool Game::CajaEnZona3(b2Body* caja3) {
 	return false; // Fuera de la zona
 }
 
+void Game::Posiciones() {
+	
+	if (currentLevel == 2) {
+	
+		box1positionX = 80.0f;
+		box2positionX = 80.0f;
+		box3positionX = 80.0f;
+	
+	}
+
+
+}
+
 void Game::Level1()
 {	
 	// Lógica de actualización del nivel 1
@@ -227,7 +242,7 @@ void Game::ResetLevel()
 {
 	// LOGICA DE LA POSICION DE LAS CAJAS SEGÚN EL NIVEL
 	// 
-	// 
+	Posiciones();
 	// 
 	// 
 	// Aquí puedes restablecer el estado de los objetos para el nuevo nivel
@@ -538,10 +553,10 @@ void Game::InitPhysics()
 
 	
 	caja2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	caja2->SetTransform(b2Vec2(80.0f, 10.0f), 0.0f);
+	caja2->SetTransform(b2Vec2(box2positionX, 10.0f), 0.0f);
 
 	caja3 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	caja3->SetTransform(b2Vec2(80.0f, 50.0f), 0.0f);
+	caja3->SetTransform(b2Vec2(box3positionX, 50.0f), 0.0f);
 
 		//asignamos la textura al sprite y al avatar
 	t.loadFromFile("assets/block.png");

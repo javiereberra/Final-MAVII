@@ -144,6 +144,8 @@ private:
 
 	//PRUEBA POSICIONES DE CAJA
 	float box1positionX;
+	float box2positionX;
+	float box3positionX;
 
 public:
 	//constructor y destructor
@@ -172,7 +174,7 @@ public:
 	//avanzar de nivel y resetear nivel
 	void NextLevel();
 	void ResetLevel();
-	
+	void Posiciones();
 
 	//menú de inicio, menú de informacion del juego
 	void MenuInicio();
