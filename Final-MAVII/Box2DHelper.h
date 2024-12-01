@@ -283,5 +283,15 @@ public:
 		return pullJoint;
 	}
 
+	// para unir objetos //
 
+	static b2WeldJoint* CreateWeldJoint(b2World* world, b2Body* bodyA, b2Body* bodyB, const b2Vec2& anchor) {
+		b2WeldJointDef jointDef;
+		jointDef.bodyA = bodyA;
+		jointDef.bodyB = bodyB;
+		jointDef.localAnchorA = bodyA->GetLocalPoint(anchor);
+		jointDef.localAnchorB = bodyB->GetLocalPoint(anchor);
+		jointDef.referenceAngle = bodyB->GetAngle() - bodyA->GetAngle();
+		return static_cast<b2WeldJoint*>(world->CreateJoint(&jointDef));
+	}
 };

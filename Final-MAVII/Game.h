@@ -96,8 +96,15 @@ private:
 	Avatar* m_AvatarPlatf3;
 
 	//LEVEL 2, cuerpo, avatares de pulley joint
-	b2Body* ascensor1;
-	Avatar* m_AvatarAscens1;
+	b2Body* ascensor1Base;
+	Avatar* m_AvatarAscensBase1;
+	b2Body* ascensor1Col;
+	Avatar* m_AvatarAscensCol1;
+	b2Body* ascensor1Col2;
+	Avatar* m_AvatarAscensCol12;
+
+
+
 
 	b2Body* ascensor2;
 	Avatar* m_AvatarAscens2;
