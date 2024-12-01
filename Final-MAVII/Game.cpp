@@ -2,14 +2,14 @@
 #include "Box2DHelper.h"
 #include <iostream>
 
-//	CON ESTE MÉTODO LAS PLATAFORMAS FÍSICAS FUNCIONAN EN CADA NIVEL
-//	PERO EL DIBUJADO FALLA
-// 
+//	2 NIVEL
+//	HAY QUE AJUSTAR LA POSICIÓN DE LAS CAJAS A 80
+//  HAY QUE CREAR PLATAFORMA 4 PARA EL NIVEL 2 Y EVITAR QUE LA COLUMNA GOLPEE LAS CAJAS
 //  
 // 
-// 	  FALTA APRENDER A LIMPIAR EL NIVEL 1 - LAS CAJAS DEBERÍAN ESTAR SIEMPRE POR LO TANTO PASARLAS A INITPHYSICS()
+// 	  
 //     FALTAN NIVEL 2 Y NIVEL 3
-//    FALTA PULLEY JOINT (DOS POLEAS)
+//    
 //    FALTA PRISMATIC JOINT (HILO QUE CUELGA)
 //    FALTA REVOLUTE JOINT (PENDULO)
 //    FALTA MENU GAME OVER
@@ -70,7 +70,7 @@ Game::Game(int ancho, int alto, std::string titulo)
 	textura3->loadFromFile("assets/background.png");
 	factory->setTexture(*textura3);
 
-	box1positionX = 60.0f;
+	box1positionX = 80.0f;
 
 	//aplicar la escala
 	SetZoom();
@@ -314,7 +314,8 @@ void Game::Dibujar()
 		m_AvatarAscensCol12->Dibujar(*wnd);
 		m_AvatarAscens2->Actualizar();
 		m_AvatarAscens2->Dibujar(*wnd);
-		
+		m_AvatarPlatf4->Dibujar(*wnd);
+		m_AvatarPlatf5->Dibujar(*wnd);
 	}
 
 
@@ -537,10 +538,10 @@ void Game::InitPhysics()
 
 	
 	caja2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	caja2->SetTransform(b2Vec2(60.0f, 10.0f), 0.0f);
+	caja2->SetTransform(b2Vec2(80.0f, 10.0f), 0.0f);
 
 	caja3 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	caja3->SetTransform(b2Vec2(60.0f, 50.0f), 0.0f);
+	caja3->SetTransform(b2Vec2(80.0f, 50.0f), 0.0f);
 
 		//asignamos la textura al sprite y al avatar
 	t.loadFromFile("assets/block.png");
@@ -586,16 +587,18 @@ void Game::InitPhysicsLevel1(){
 void Game::InitPhysicsLevel2() {
 
 	ascensor1Base = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 10, 5, 1.0f, 1.0f, 1.0f);
-	ascensor1Base->SetTransform(b2Vec2(30.0f, 70.0f), 0.0f);
-	ascensor1Col = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 3, 10, 1.0f, 1.0f, 1.0f);
-	ascensor1Col->SetTransform(b2Vec2(35.0f, 65.0f), 0.0f);
-	ascensor1Col2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 3, 10, 1.0f, 1.0f, 1.0f);
-	ascensor1Col2->SetTransform(b2Vec2(25.0f, 65.0f), 0.0f);
+	ascensor1Base->SetTransform(b2Vec2(50.0f, 50.0f), 0.0f);
+	ascensor1Col = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 3, 15, 1.0f, 1.0f, 1.0f);
+	ascensor1Col->SetTransform(b2Vec2(55.0f, 45.0f), 0.0f);
+	ascensor1Col2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 3, 15, 1.0f, 1.0f, 1.0f);
+	ascensor1Col2->SetTransform(b2Vec2(45.0f, 45.0f), 0.0f);
 
 	ascensor1Base->SetFixedRotation(true);
 
-	ascensor2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 4, 30, 1.0f, 1.0f, 1.0f);
-	ascensor2->SetTransform(b2Vec2(70.0f, 70.0f), 0.0f);
+	ascensor2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 4, 35, 1.0f, 1.0f, 1.0f);
+	ascensor2->SetTransform(b2Vec2(60.0f, 50.0f), 0.0f);
+
+	ascensor2->SetFixedRotation(true);
 
 	b2WeldJoint* ascensorCol1 = Box2DHelper::CreateWeldJoint(phyWorld, ascensor1Base, ascensor1Col, ascensor1Col->GetWorldCenter());
 	b2WeldJoint* ascensorCol2 = Box2DHelper::CreateWeldJoint(phyWorld, ascensor1Base, ascensor1Col2, ascensor1Col2->GetWorldCenter());
@@ -612,6 +615,20 @@ void Game::InitPhysicsLevel2() {
 
 	sf::Sprite* acspr2 = new sf::Sprite(platText);
 	m_AvatarAscens2 = new Avatar(ascensor2, acspr2);
+
+	plataforma4 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
+	plataforma4->SetTransform(b2Vec2(80.0f, 65.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar	
+	sf::Sprite* pfspr4 = new sf::Sprite(platText);
+	//avatar del pared derecha
+	m_AvatarPlatf4 = new Avatar(plataforma4, pfspr4);
+
+	plataforma5 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
+	plataforma5->SetTransform(b2Vec2(80.0f, 35.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar	
+	sf::Sprite* pfspr5 = new sf::Sprite(platText);
+	//avatar del pared derecha
+	m_AvatarPlatf5 = new Avatar(plataforma5, pfspr5);
 
 }
 

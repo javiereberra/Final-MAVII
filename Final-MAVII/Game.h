@@ -95,6 +95,12 @@ private:
 	b2Body* plataforma3;
 	Avatar* m_AvatarPlatf3;
 
+	b2Body* plataforma4;
+	Avatar* m_AvatarPlatf4;
+
+	b2Body* plataforma5;
+	Avatar* m_AvatarPlatf5;
+
 	//LEVEL 2, cuerpo, avatares de pulley joint
 	b2Body* ascensor1Base;
 	Avatar* m_AvatarAscensBase1;
