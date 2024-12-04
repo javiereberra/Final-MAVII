@@ -2,15 +2,15 @@
 #include "Box2DHelper.h"
 #include <iostream>
 
-//	2 NIVEL
-//	hay que afinar el nivel
-//  HACER NIVEL 3 CON LOS DEMÁS JOINTS
-// 
-// 	  
-//     FALTAN NIVEL 2 Y NIVEL 3
+//	CONDICION DE VICTORIA Y DERROTA
+//	MENU DE GAME OVER
+//  
+// DIBUJAR Y REDIBUJAR OBJETOS
+// 	  NUEVO FONDO MENU
+//     
+//    COMENTAR EL CÓDIGO
 //    
-//    FALTA PRISMATIC JOINT (HILO QUE CUELGA)
-//    FALTA REVOLUTE JOINT (PENDULO)
+//    
 //    FALTA MENU GAME OVER
 //    LIMPIAR EN DIBUJAR() LOS OBJETOS QUE NO SE MUEVEN
 //    COMENTAR TODO EL CODIGO
@@ -72,6 +72,7 @@ Game::Game(int ancho, int alto, std::string titulo)
 	box1positionX = 60.0f;
 	box2positionX = 60.0f;
 	box3positionX = 60.0f;
+	box2positionY = 10.0f;
 
 	//aplicar la escala
 	SetZoom();
@@ -177,6 +178,15 @@ void Game::Posiciones() {
 		box2positionX = 60.0f;
 		box3positionX = 60.0f;
 	
+	}
+
+	if (currentLevel == 3) {
+
+		box1positionX = 73.0f;
+		box2positionX = 73.0f;
+		box3positionX = 73.0f;
+		box2positionY = 20.0f;
+
 	}
 
 
@@ -334,6 +344,23 @@ void Game::Dibujar()
 		m_AvatarParedDMedio->Dibujar(*wnd);
 		m_AvatarPlanoInclinado->Actualizar();
 		m_AvatarPlanoInclinado->Dibujar(*wnd);
+		
+	}
+
+	if (currentLevel == 3) {
+		m_AvatarEngr1->Dibujar(*wnd);
+		m_AvatarEngr2->Dibujar(*wnd);
+
+		
+		m_AvatarCoso1->Actualizar();
+		m_AvatarCoso1->Dibujar(*wnd);
+
+		m_AvatarCoso2->Actualizar();
+		m_AvatarCoso2->Dibujar(*wnd);
+
+		m_AvatarPlanoInclinado2->Actualizar();
+		m_AvatarPlanoInclinado2->Dibujar(*wnd);
+		m_AvatarColLev3->Dibujar(*wnd);
 		
 	}
 
@@ -557,7 +584,7 @@ void Game::InitPhysics()
 
 	
 	caja2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
-	caja2->SetTransform(b2Vec2(box2positionX, 10.0f), 0.0f);
+	caja2->SetTransform(b2Vec2(box2positionX, box2positionY), 0.0f);
 
 	caja3 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
 	caja3->SetTransform(b2Vec2(box3positionX, 50.0f), 0.0f);
@@ -670,6 +697,49 @@ void Game::InitPhysicsLevel2() {
 }
 
 void Game::InitPhysicsLevel3() {
+
+	engranaje1 = Box2DHelper::CreateCircularStaticBody(phyWorld, 5.0f);
+	engranaje2 = Box2DHelper::CreateCircularStaticBody(phyWorld, 5.0f);
+	engranaje1->SetTransform(b2Vec2(40.0f, 40.0f), 0.0f);
+	engranaje2->SetTransform(b2Vec2(80.0f, 15.0f), 0.0f);
+	coso1 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 3, 15, 1.0f, 1.0f, 1.0f);
+	coso2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 2, 20, 1.0f, 1.0f, 1.0f);
+	coso1->SetTransform(b2Vec2(40.0f, 60.0f), 0.0f);
+	coso2->SetTransform(b2Vec2(80.0f, 50.0f), 0.0f);
+
+	b2RevoluteJoint* revJoint = Box2DHelper::CreateRevoluteJoint(phyWorld, engranaje1, engranaje1->GetWorldCenter(),
+		coso1, 0.0f, 0.0f, 10.0f, 1000.0f, false, false);
+	b2PrismaticJoint* prisJoint = Box2DHelper::CreatePrismaticJoint(phyWorld, engranaje2, engranaje2->GetWorldCenter(),
+		coso2, b2Vec2(0.0f, 1.0f), -5, 5, -10.0f, 10000.0f, true, true);
+	b2GearJoint* pGearJoint = Box2DHelper::CreateGearJoint(phyWorld, engranaje1, engranaje2, revJoint, prisJoint, 10.0f);
+
+	engrText.loadFromFile("assets/BaseCanon.png");
+	sf::Sprite* engspr1 = new sf::Sprite(engrText);
+	sf::Sprite* engspr2 = new sf::Sprite(engrText);
+
+	m_AvatarEngr1 = new Avatar(engranaje1, engspr1);
+	m_AvatarEngr2 = new Avatar(engranaje2, engspr2);
+
+	sf::Sprite* cosospr1 = new sf::Sprite(platText);
+	sf::Sprite* cosospr2 = new sf::Sprite(platText);
+
+	m_AvatarCoso1 = new Avatar(coso1, cosospr1);
+	m_AvatarCoso2 = new Avatar(coso2, cosospr2);
+
+
+	planoInclinado2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 15, 3);
+	planoInclinado2->SetTransform(b2Vec2(75.0f, 60.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar
+	sf::Sprite* pispr2 = new sf::Sprite(planoInc);
+	m_AvatarPlanoInclinado2 = new Avatar(planoInclinado2, pispr2);
+	planoInclinado2->SetTransform(b2Vec2(75.0f, 68.0f), b2_pi / 4.0f);
+
+	columnaLevel3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 2, 50);
+	columnaLevel3->SetTransform(b2Vec2(70.0f, 40.0f), 0.0f);
+	//asignamos la textura al sprite y al avatar
+	sf::Sprite* col3 = new sf::Sprite(col1);
+	//avatar del pared derecha
+	m_AvatarColLev3 = new Avatar(columnaLevel3, col3);
 }
 
 

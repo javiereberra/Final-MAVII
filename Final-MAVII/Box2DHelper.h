@@ -294,4 +294,63 @@ public:
 		jointDef.referenceAngle = bodyB->GetAngle() - bodyA->GetAngle();
 		return static_cast<b2WeldJoint*>(world->CreateJoint(&jointDef));
 	}
+
+	//-------------------------------------------------------------
+	// Una Pulley Joint entre dos cuerpos
+	//-------------------------------------------------------------
+	static b2GearJoint* CreateGearJoint(b2World* phyWorld, b2Body* first, b2Body* second,
+		b2Joint* Joint1, b2Joint* Joint2, float ratio)
+	{
+		b2GearJointDef jointDef;
+		jointDef.bodyA = first;
+		jointDef.bodyB = second;
+		jointDef.joint1 = Joint1;
+		jointDef.joint2 = Joint2;
+		jointDef.ratio = ratio;
+
+		b2GearJoint* gearJoint = (b2GearJoint*)phyWorld->CreateJoint(&jointDef);
+		return gearJoint;
+	}
+
+	static b2PrismaticJoint* CreatePrismaticJoint(b2World* phyWorld, b2Body* base, b2Vec2 anchorBase, b2Body* second,
+		b2Vec2 axis, float distMin, float distMax, float motorSpeed, float maxForce,
+		bool enableMotor, bool enableLimits)
+	{
+		b2PrismaticJointDef jointDef;
+		jointDef.Initialize(base, second, anchorBase, axis);
+		jointDef.lowerTranslation = distMin;
+		jointDef.upperTranslation = distMax;
+		jointDef.enableLimit = enableLimits;
+		jointDef.maxMotorForce = maxForce;
+		jointDef.motorSpeed = motorSpeed;
+		jointDef.enableMotor = enableMotor;
+
+		b2PrismaticJoint* prisJoint = (b2PrismaticJoint*)phyWorld->CreateJoint(&jointDef);
+		return prisJoint;
+	}
+
+	static b2RevoluteJoint* CreateRevoluteJoint(b2World* phyWorld, b2Body* base, b2Vec2 anchorBase, b2Body* second,
+		float angMin, float angMax, float motorSpeed, float maxTorque,
+		bool enableMotor, bool enableLimits)
+	{
+		b2RevoluteJointDef jointDef;
+		jointDef.Initialize(base, second, anchorBase);
+		jointDef.lowerAngle = angMin;
+		jointDef.upperAngle = angMax;
+		jointDef.enableLimit = enableLimits;
+		jointDef.maxMotorTorque = maxTorque;
+		jointDef.motorSpeed = motorSpeed;
+		jointDef.enableMotor = enableMotor;
+
+		b2RevoluteJoint* revJoint = (b2RevoluteJoint*)phyWorld->CreateJoint(&jointDef);
+		return revJoint;
+	}
+
+
+
+
+
+
+
+
 };

@@ -120,6 +120,26 @@ private:
 	Avatar* m_AvatarPlanoInclinado;
 	Texture planoInc;
 
+	//LEVEL3
+
+	b2Body* engranaje1;
+	Avatar* m_AvatarEngr1;
+
+	b2Body* engranaje2;
+	Avatar* m_AvatarEngr2;
+	Texture engrText;
+
+	b2Body* coso1;
+	Avatar* m_AvatarCoso1;
+
+	b2Body* coso2;
+	Avatar* m_AvatarCoso2;
+
+	b2Body* planoInclinado2;
+	Avatar* m_AvatarPlanoInclinado2;
+
+	b2Body* columnaLevel3;
+	Avatar* m_AvatarColLev3;
 
 
 
@@ -151,6 +171,7 @@ private:
 	float box1positionX;
 	float box2positionX;
 	float box3positionX;
+	float box2positionY;
 
 public:
 	//constructor y destructor
