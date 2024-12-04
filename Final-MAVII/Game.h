@@ -110,10 +110,15 @@ private:
 	Avatar* m_AvatarAscensCol12;
 
 
-
-
 	b2Body* ascensor2;
 	Avatar* m_AvatarAscens2;
+
+	b2Body* paredDMedio;
+	Avatar* m_AvatarParedDMedio;
+
+	b2Body* planoInclinado;
+	Avatar* m_AvatarPlanoInclinado;
+	Texture planoInc;
 
 
 
