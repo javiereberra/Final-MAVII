@@ -161,7 +161,7 @@ private:
 
 	//contador de Ragdolls y texto
 	int contadorRagdolls;
-	int ragdollsrestantes;
+	int ragdollsRestantes;
 	Font* fuente;
 	Text* textContador;
 

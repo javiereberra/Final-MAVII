@@ -2,8 +2,6 @@
 #include "Box2DHelper.h"
 #include <iostream>
 
-//	NECESITO MODIFICAR EL CONTADOR DE RAGDOLLS PARA QUE SEA CUENTA REGRESIVA
-//	CONDICION DE DERROTA
 // INDICADORES PARA NIVEL 2 Y 3? 
 // VER SI HAY QUE REDIBUJAR ALGUN SPRITE
 //     
@@ -27,7 +25,7 @@ Game::Game(int ancho, int alto, std::string titulo)
 	//Establecer el contador de ragdolls en cero
 	contadorRagdolls = 0;
 	//utilizar para hacer la cuenta regresiva//////
-	ragdollsrestantes = 10 - contadorRagdolls;
+	ragdollsRestantes = 10;
 
 	//fuente y texto para el texto que cuenta los ragdolls
 	fuente = new Font;
@@ -36,7 +34,7 @@ Game::Game(int ancho, int alto, std::string titulo)
 	textContador->setFont(*fuente);
 	textContador->setCharacterSize(15);
 	textContador->setPosition(5, 5);
-	textContador->setString("CONTADOR DE RAGDOLLS:" + std::to_string(contadorRagdolls));
+	textContador->setString("RAGDOLLS RESTANTES:" + std::to_string(ragdollsRestantes));
 	
 
 	//textura y sprites de los íconos de cajas correctas e incorrectas
@@ -227,6 +225,11 @@ void Game::Level1()
 		NextLevel(); // Pasamos al siguiente nivel
 		InitPhysicsLevel2();
 	}
+
+	if (ragdollsRestantes == 0) {
+		MenuGameOver();
+	}
+
 }
 
 void Game::Level2()
@@ -250,7 +253,9 @@ void Game::Level2()
 		NextLevel(); // Pasamos al siguiente nivel
 		InitPhysicsLevel3();
 	}
-
+	if (ragdollsRestantes == 0) {
+		MenuGameOver();
+	}
 }
 
 // Método para el tercer nivel
@@ -264,6 +269,10 @@ void Game::Level3()
 	if ((CajaEnZona1(caja1)) && (CajaEnZona2(caja2)) && (CajaEnZona3(caja3))) {
 		std::cout << "¡Felicidades, has completado el juego!" << std::endl;
 		MenuVictory();		
+	}
+
+	if (ragdollsRestantes == 0) {
+		MenuGameOver();
 	}
 }
 
@@ -326,7 +335,7 @@ void Game::Actualizar()
 	phyWorld->ClearForces();
 	phyWorld->DebugDraw();
 
-	textContador->setString("CONTADOR DE RAGDOLLS:" + std::to_string(contadorRagdolls));
+	textContador->setString("RAGDOLLS RESTANTES:" + std::to_string(ragdollsRestantes));
 
 	CajasCorrectas();
 	
@@ -483,6 +492,9 @@ void Game::Eventos()
 			ragdoll->applyImpulse(impulse);
 			ragdolls.push_back(ragdoll);
 			contadorRagdolls++;
+			ragdollsRestantes--;
+			std::cout << "Contador de Ragdolls: "<< contadorRagdolls << std::endl;
+			std::cout << "Ragdolls Restantes: " << ragdollsRestantes << std::endl;
 			break;
 		}
 		// COMPROBAR LAS POSICIONES //
@@ -627,6 +639,7 @@ void Game::InitPhysics()
 	m_Avatar2 = new Avatar(caja2, s);
 	m_Avatar3 = new Avatar(caja3, s);
 
+	ragdollsRestantes = 10;
 
 }
 
