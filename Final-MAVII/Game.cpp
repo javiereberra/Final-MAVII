@@ -2,18 +2,16 @@
 #include "Box2DHelper.h"
 #include <iostream>
 
-//	CONDICION DE VICTORIA Y DERROTA
-//	MENU DE GAME OVER
-//  
-// DIBUJAR Y REDIBUJAR OBJETOS
-// 	  NUEVO FONDO MENU
+//	NECESITO MODIFICAR EL CONTADOR DE RAGDOLLS PARA QUE SEA CUENTA REGRESIVA
+//	CONDICION DE DERROTA
+// INDICADORES PARA NIVEL 2 Y 3? 
+// VER SI HAY QUE REDIBUJAR ALGUN SPRITE
 //     
-//    COMENTAR EL CÓDIGO
-//    
-//    
-//    FALTA MENU GAME OVER
+//    REVISAR DESTRUCTOR - OBJETOS A DESTRUIR PARA GESTIONAR MEMORIA
+//    LIMPIAR CÒDIGO
 //    LIMPIAR EN DIBUJAR() LOS OBJETOS QUE NO SE MUEVEN
-//    COMENTAR TODO EL CODIGO
+//	  COMENTAR CODIGO
+
 
 
 //constructor 
@@ -26,6 +24,11 @@ Game::Game(int ancho, int alto, std::string titulo)
 	wnd->setFramerateLimit(fps);
 	frameTime = 1.0f / fps;
 
+	//Establecer el contador de ragdolls en cero
+	contadorRagdolls = 0;
+	//utilizar para hacer la cuenta regresiva//////
+	ragdollsrestantes = 10 - contadorRagdolls;
+
 	//fuente y texto para el texto que cuenta los ragdolls
 	fuente = new Font;
 	textContador = new Text;
@@ -34,6 +37,7 @@ Game::Game(int ancho, int alto, std::string titulo)
 	textContador->setCharacterSize(15);
 	textContador->setPosition(5, 5);
 	textContador->setString("CONTADOR DE RAGDOLLS:" + std::to_string(contadorRagdolls));
+	
 
 	//textura y sprites de los íconos de cajas correctas e incorrectas
 	cajaCorrectaTx = new Texture;
@@ -56,18 +60,28 @@ Game::Game(int ancho, int alto, std::string titulo)
 	//Textura y Sprite del menú inicio y el menú de información
 	textura1 = new Texture;
 	fondo = new Sprite;
-	textura1->loadFromFile("assets/menuInicio.png");
+	textura1->loadFromFile("assets/menuInicio2.jpg");
 	fondo->setTexture(*textura1);
 
 	textura2 = new Texture;
 	menuInfo = new Sprite;
-	textura2->loadFromFile("assets/menuInfo.jpg");
+	textura2->loadFromFile("assets/menuInfo1.jpg");
 	menuInfo->setTexture(*textura2);
 
 	textura3 = new Texture;
 	factory = new Sprite;
-	textura3->loadFromFile("assets/background.png");
+	textura3->loadFromFile("assets/background3.png");
 	factory->setTexture(*textura3);
+
+	textura4 = new Texture;
+	menuGameOver = new Sprite;
+	textura4->loadFromFile("assets/gameover.png");
+	menuGameOver->setTexture(*textura4);
+
+	textura5 = new Texture;
+	menuVictory = new Sprite;
+	textura5->loadFromFile("assets/victory.png");
+	menuVictory->setTexture(*textura5);
 
 	box1positionX = 60.0f;
 	box2positionX = 60.0f;
@@ -86,8 +100,7 @@ Game::Game(int ancho, int alto, std::string titulo)
 	//Establecer el nivel y su condición de incompleto
 	currentLevel = 1;
 	levelCompleted = false;
-	//Establecer el contador de ragdolls en cero
-	contadorRagdolls = 0;
+	
 
 	//PRUEBA POSICIONES CAJAS
 
@@ -201,7 +214,15 @@ void Game::Level1()
 	Dibujar(); // Aquí dibujas los objetos del nivel, ragdolls, etc.
 
 	// Condición para pasar al siguiente nivel
-	if (contadorRagdolls >= 10) {
+
+	//LO DEJAMOS COMENTADO POR LAS DUDAS, LUEGO BORRARLO
+	//if (contadorRagdolls >= 10) {
+	//	levelCompleted = true;
+	//	NextLevel(); // Pasamos al siguiente nivel
+	//	InitPhysicsLevel2();
+	//}
+
+	if ((CajaEnZona1(caja1)) && (CajaEnZona2(caja2)) && (CajaEnZona3(caja3))) {
 		levelCompleted = true;
 		NextLevel(); // Pasamos al siguiente nivel
 		InitPhysicsLevel2();
@@ -217,11 +238,19 @@ void Game::Level2()
 	Dibujar();
 
 	// Condición para pasar al siguiente nivel
-	if (contadorRagdolls >= 20) {
+	//LO DEJAMOS COMENTADO POR LAS DUDAS, LUEGO BORRARLO
+	//if (contadorRagdolls >= 20) {
+	//	levelCompleted = true;
+	//	NextLevel();
+	//	InitPhysicsLevel3();
+	//}
+
+	if ((CajaEnZona1(caja1)) && (CajaEnZona2(caja2)) && (CajaEnZona3(caja3))) {
 		levelCompleted = true;
-		NextLevel();
+		NextLevel(); // Pasamos al siguiente nivel
 		InitPhysicsLevel3();
 	}
+
 }
 
 // Método para el tercer nivel
@@ -232,9 +261,9 @@ void Game::Level3()
 	Actualizar();
 	Dibujar();
 
-	if (contadorRagdolls >= 30) {
+	if ((CajaEnZona1(caja1)) && (CajaEnZona2(caja2)) && (CajaEnZona3(caja3))) {
 		std::cout << "¡Felicidades, has completado el juego!" << std::endl;
-		wnd->close();
+		MenuVictory();		
 	}
 }
 
@@ -811,6 +840,71 @@ void Game::MenuInfo() {
 		wnd->draw(*menuInfo);
 		wnd->display();
 	}
+
+}
+
+
+void Game::MenuGameOver(){
+
+	wnd->setView(wnd->getDefaultView());
+
+	// Mostrar el menú
+	while (wnd->isOpen()) {
+		sf::Event event;
+		while (wnd->pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
+				wnd->close();
+				return;
+			}
+			if (event.type == sf::Event::KeyPressed) {
+				if (event.key.code == sf::Keyboard::Space) {
+										
+					wnd->close();
+				}
+			}
+		}
+
+		// Dibujar el menú
+		wnd->clear(sf::Color::Black);
+		wnd->draw(*menuGameOver);
+		wnd->display();
+	}
+
+
+
+
+
+}
+
+void Game::MenuVictory() {
+
+	wnd->setView(wnd->getDefaultView());
+
+	// Mostrar el menú
+	while (wnd->isOpen()) {
+		sf::Event event;
+		while (wnd->pollEvent(event)) {
+			if (event.type == sf::Event::Closed) {
+				wnd->close();
+				return;
+			}
+			if (event.type == sf::Event::KeyPressed) {
+				if (event.key.code == sf::Keyboard::Space) {
+
+					wnd->close();
+				}
+			}
+		}
+
+		// Dibujar el menú
+		wnd->clear(sf::Color::Black);
+		wnd->draw(*menuVictory);
+		wnd->display();
+	}
+
+
+
+
 
 }
 

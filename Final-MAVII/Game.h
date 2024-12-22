@@ -35,6 +35,11 @@ private:
 	Texture* textura3;
 	Sprite* factory;
 
+	Texture* textura4;
+	Sprite* menuGameOver;
+
+	Texture* textura5;
+	Sprite* menuVictory;
 
 	//cuerpo del cañon
 	b2Body* cannon;
@@ -156,6 +161,7 @@ private:
 
 	//contador de Ragdolls y texto
 	int contadorRagdolls;
+	int ragdollsrestantes;
 	Font* fuente;
 	Text* textContador;
 
@@ -207,6 +213,7 @@ public:
 	void MenuInfo();
 	//NO LO USÉ TODAVIA
 	void MenuGameOver();
+	void MenuVictory();
 
 	//para comprobar si las cajas están en la zona correcta
 	bool CajaEnZona1(b2Body* caja1);
