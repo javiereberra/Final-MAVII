@@ -2,7 +2,8 @@
 #include "Box2DHelper.h"
 #include <iostream>
 
-// INDICADORES PARA NIVEL 2 Y 3? 
+// 
+// AGREGAR UN RAGDOLL A LA CUENTA REGRESIVA
 // VER SI HAY QUE REDIBUJAR ALGUN SPRITE
 //     
 //    REVISAR DESTRUCTOR - OBJETOS A DESTRUIR PARA GESTIONAR MEMORIA
@@ -67,9 +68,19 @@ Game::Game(int ancho, int alto, std::string titulo)
 	menuInfo->setTexture(*textura2);
 
 	textura3 = new Texture;
-	factory = new Sprite;
-	textura3->loadFromFile("assets/background3.png");
-	factory->setTexture(*textura3);
+	factoryLevel1 = new Sprite;
+	textura3->loadFromFile("assets/background.png");
+	factoryLevel1->setTexture(*textura3);
+
+	textura6 = new Texture;
+	factoryLevel2 = new Sprite;
+	textura6->loadFromFile("assets/background5.png");
+	factoryLevel2->setTexture(*textura6);
+
+	textura7 = new Texture;
+	factoryLevel3 = new Sprite;
+	textura7->loadFromFile("assets/background6.png");
+	factoryLevel3->setTexture(*textura7);
 
 	textura4 = new Texture;
 	menuGameOver = new Sprite;
@@ -345,7 +356,16 @@ void Game::Actualizar()
 void Game::Dibujar()
 {
 	// EVALUAR SI SON NECESARIOS LOS ACTUALIZAR DE LOS OBJETOS ESTÁTICOS?
-	wnd->draw(*factory);
+	if (currentLevel == 1) {
+		wnd->draw(*factoryLevel1);
+	}
+	if (currentLevel == 2) {
+		wnd->draw(*factoryLevel2);
+	}
+	if (currentLevel == 3) {
+		wnd->draw(*factoryLevel3);
+	}
+
 	m_Avatar1->Actualizar();
 	m_Avatar1->Dibujar(*wnd);
 	m_Avatar2->Actualizar();
@@ -533,7 +553,9 @@ void Game::SetZoom()
 	cajaCorrecta1->setScale(0.4 * scaleX, 0.4 * scaleY);
 	cajaCorrecta2->setScale(0.4 * scaleX, 0.4 * scaleY);
 	cajaCorrecta3->setScale(0.4 * scaleX, 0.4 * scaleY);
-	factory->setScale(1.6 * scaleX, 1.6 * scaleY);
+	factoryLevel1->setScale(1.6 * scaleX, 1.6 * scaleY);
+	factoryLevel2->setScale(1.6 * scaleX, 1.6 * scaleY);
+	factoryLevel3->setScale(1.6 * scaleX, 1.6 * scaleY);
 
 	
 }

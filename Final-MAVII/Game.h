@@ -33,7 +33,11 @@ private:
 	Sprite* menuInfo;
 
 	Texture* textura3;
-	Sprite* factory;
+	Sprite* factoryLevel1;
+	Texture* textura6;
+	Sprite* factoryLevel2;
+	Texture* textura7;
+	Sprite* factoryLevel3;
 
 	Texture* textura4;
 	Sprite* menuGameOver;
