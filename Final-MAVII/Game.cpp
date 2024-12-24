@@ -237,7 +237,7 @@ void Game::Level1()
 		InitPhysicsLevel2();
 	}
 
-	if (ragdollsRestantes == 0) {
+	if (ragdollsRestantes == -1) {
 		MenuGameOver();
 	}
 
@@ -264,7 +264,7 @@ void Game::Level2()
 		NextLevel(); // Pasamos al siguiente nivel
 		InitPhysicsLevel3();
 	}
-	if (ragdollsRestantes == 0) {
+	if (ragdollsRestantes == -1) {
 		MenuGameOver();
 	}
 }
@@ -282,7 +282,7 @@ void Game::Level3()
 		MenuVictory();		
 	}
 
-	if (ragdollsRestantes == 0) {
+	if (ragdollsRestantes == -1) {
 		MenuGameOver();
 	}
 }
