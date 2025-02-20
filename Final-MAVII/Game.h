@@ -127,7 +127,7 @@ private:
 	Avatar* m_AvatarPlanoInclinado;
 	Texture planoInc;
 
-	//cuerpo y avatares de los engranajes del LEVEL3
+	//cuerpo y avatares de las poles y cargas del LEVEL3
 
 	b2Body* polea1;
 	Avatar* m_AvatarPolea1;
@@ -136,11 +136,11 @@ private:
 	Avatar* m_AvatarPolea2;
 	Texture poleaText;
 
-	b2Body* coso1;
-	Avatar* m_AvatarCoso1;
+	b2Body* carga1;
+	Avatar* m_AvatarCarga1;
 
-	b2Body* coso2;
-	Avatar* m_AvatarCoso2;
+	b2Body* carga2;
+	Avatar* m_AvatarCarga2;
 
 	b2Body* planoInclinado2;
 	Avatar* m_AvatarPlanoInclinado2;

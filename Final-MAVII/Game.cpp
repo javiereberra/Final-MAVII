@@ -409,11 +409,11 @@ void Game::Dibujar()
 		m_AvatarPolea2->Dibujar(*wnd);
 
 		
-		m_AvatarCoso1->Actualizar();
-		m_AvatarCoso1->Dibujar(*wnd);
+		m_AvatarCarga1->Actualizar();
+		m_AvatarCarga1->Dibujar(*wnd);
 
-		m_AvatarCoso2->Actualizar();
-		m_AvatarCoso2->Dibujar(*wnd);
+		m_AvatarCarga2->Actualizar();
+		m_AvatarCarga2->Dibujar(*wnd);
 
 		m_AvatarPlanoInclinado2->Actualizar();
 		m_AvatarPlanoInclinado2->Dibujar(*wnd);
@@ -765,15 +765,15 @@ void Game::InitPhysicsLevel3() {
 	polea2 = Box2DHelper::CreateCircularStaticBody(phyWorld, 5.0f);
 	polea1->SetTransform(b2Vec2(40.0f, 40.0f), 0.0f);
 	polea2->SetTransform(b2Vec2(80.0f, 15.0f), 0.0f);
-	coso1 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 3, 15, 1.0f, 1.0f, 1.0f);
-	coso2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 2, 20, 1.0f, 1.0f, 1.0f);
-	coso1->SetTransform(b2Vec2(40.0f, 60.0f), 0.0f);
-	coso2->SetTransform(b2Vec2(80.0f, 50.0f), 0.0f);
+	carga1 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 3, 15, 1.0f, 1.0f, 1.0f);
+	carga2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 2, 20, 1.0f, 1.0f, 1.0f);
+	carga1->SetTransform(b2Vec2(40.0f, 60.0f), 0.0f);
+	carga2->SetTransform(b2Vec2(80.0f, 50.0f), 0.0f);
 
 	b2RevoluteJoint* revJoint = Box2DHelper::CreateRevoluteJoint(phyWorld, polea1, polea1->GetWorldCenter(),
-		coso1, 0.0f, 0.0f, 10.0f, 1000.0f, false, false);
+		carga1, 0.0f, 0.0f, 10.0f, 1000.0f, false, false);
 	b2PrismaticJoint* prisJoint = Box2DHelper::CreatePrismaticJoint(phyWorld, polea2, polea2->GetWorldCenter(),
-		coso2, b2Vec2(0.0f, 1.0f), -5, 5, -10.0f, 10000.0f, true, true);
+		carga2, b2Vec2(0.0f, 1.0f), -5, 5, -10.0f, 10000.0f, true, true);
 	b2GearJoint* pGearJoint = Box2DHelper::CreateGearJoint(phyWorld, polea1, polea2, revJoint, prisJoint, 10.0f);
 
 	poleaText.loadFromFile("assets/BaseCanon.png");
@@ -783,11 +783,11 @@ void Game::InitPhysicsLevel3() {
 	m_AvatarPolea1 = new Avatar(polea1, polspr1);
 	m_AvatarPolea2 = new Avatar(polea2, polspr2);
 
-	sf::Sprite* cosospr1 = new sf::Sprite(platText);
-	sf::Sprite* cosospr2 = new sf::Sprite(platText);
+	sf::Sprite* cargaspr1 = new sf::Sprite(platText);
+	sf::Sprite* cargaspr2 = new sf::Sprite(platText);
 
-	m_AvatarCoso1 = new Avatar(coso1, cosospr1);
-	m_AvatarCoso2 = new Avatar(coso2, cosospr2);
+	m_AvatarCarga1 = new Avatar(carga1, cargaspr1);
+	m_AvatarCarga2 = new Avatar(carga2, cargaspr2);
 
 
 	planoInclinado2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 15, 3);
