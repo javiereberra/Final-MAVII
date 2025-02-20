@@ -2,9 +2,8 @@
 #include "Box2DHelper.h"
 #include <iostream>
 
-// 
-// AGREGAR UN RAGDOLL A LA CUENTA REGRESIVA
-// VER SI HAY QUE REDIBUJAR ALGUN SPRITE
+//   VER SI HAY QUE REDIBUJAR ALGUN SPRITE
+//   introducir musica??
 //     
 //    REVISAR DESTRUCTOR - OBJETOS A DESTRUIR PARA GESTIONAR MEMORIA
 //    LIMPIAR CÒDIGO
@@ -69,7 +68,7 @@ Game::Game(int ancho, int alto, std::string titulo)
 
 	textura3 = new Texture;
 	factoryLevel1 = new Sprite;
-	textura3->loadFromFile("assets/background.png");
+	textura3->loadFromFile("assets/background3.png");
 	factoryLevel1->setTexture(*textura3);
 
 	textura6 = new Texture;

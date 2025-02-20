@@ -30,21 +30,21 @@ private:
 
     //AVATAR CABEZA
     Avatar* avatarCabeza;
-    // Textura y sprite para el cabeza
+    // Textura y sprite para la cabeza
     Texture cabezaTexture;
     Sprite cabezaSprite;
 
-    //AVATAR PIERNA
+    //AVATAR PIERNAS
     Avatar* avatarPiernaD;
     Avatar* avatarPiernaI;
-    // Textura y sprite para el pierna
+    // Textura y sprite para las piernas
     Texture piernaTexture;
     Sprite piernaSprite;
 
     //AVATAR BRAZOS
     Avatar* avatarBrazoD;
     Avatar* avatarBrazoI;
-    // Textura y sprite para el pierna
+    // Textura y sprite para los brazos
     Texture brazoDTexture;
     Texture brazoITexture;
     Sprite brazoDSprite;
@@ -58,7 +58,7 @@ public:
     Ragdoll(b2World* world, const b2Vec2& position);
     ~Ragdoll();
 
-    //para actualizar y dibujar los sprites
+    //métodos para actualizar y dibujar los sprites
     void Actualizar();
     void Dibujar(sf::RenderWindow& wnd);
     //aplicar el impulso del cañón sobre el ragdoll

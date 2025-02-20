@@ -17,7 +17,7 @@ Ragdoll::Ragdoll(b2World* world, const b2Vec2& position)
 
 
     // Crear cabeza
-    b2Vec2 cabezaPosition = position + b2Vec2(0.0f, -7.0f); // Ajustar posición para que esté encima
+    b2Vec2 cabezaPosition = position + b2Vec2(0.0f, -7.0f); // Para ajustar posición para que esté encima
     cabeza = Box2DHelper::CreateRectangularDynamicBody(world, 1.7f, 1.7f, 0.7f, 0.1, 0.1f);
     cabeza->SetTransform(cabezaPosition, 0);
 
@@ -120,7 +120,7 @@ Ragdoll::Ragdoll(b2World* world, const b2Vec2& position)
 
 void Ragdoll::Actualizar() {
     
-    // Actualizar el avatar del torso
+    // Actualizar todos los avatares del ragdoll
     avatarTorso->Actualizar();
     avatarCabeza->Actualizar();
     avatarPiernaD->Actualizar();
@@ -130,7 +130,7 @@ void Ragdoll::Actualizar() {
 }
 
 void Ragdoll::Dibujar(sf::RenderWindow& wnd) {
-    // Dibujar el avatar del torso
+    // Dibujar todos los avatares del ragdoll
     avatarTorso->Dibujar(wnd);
     avatarCabeza->Dibujar(wnd);
     avatarPiernaD->Dibujar(wnd);
@@ -140,7 +140,7 @@ void Ragdoll::Dibujar(sf::RenderWindow& wnd) {
 }
 
 
-//para aplicarle la fuerza del cañon
+//para aplicarle la fuerza del cañon al centro del ragdoll
 
 void Ragdoll::applyImpulse(const b2Vec2& impulse) {
     torso->ApplyLinearImpulseToCenter(impulse, true);
