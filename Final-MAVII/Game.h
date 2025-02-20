@@ -127,7 +127,7 @@ private:
 	Avatar* m_AvatarPlanoInclinado;
 	Texture planoInc;
 
-	//cuerpo y avatares de las poles y cargas del LEVEL3
+	//cuerpo y avatares de las poleas y cargas del LEVEL3
 
 	b2Body* polea1;
 	Avatar* m_AvatarPolea1;
@@ -175,7 +175,7 @@ private:
 	Texture* cajaIncorrectaTx;
 
 
-	//PRUEBA POSICIONES DE CAJA
+	//posiciones de las cajas
 	float box1positionX;
 	float box2positionX;
 	float box3positionX;
@@ -185,14 +185,14 @@ public:
 	//constructor y destructor
 	Game(int ancho, int alto, std::string titulo);
 	~Game(void);
-	//iniciar físicas
+	//iniciar físicas base y de cada nivel
 	void InitPhysics();
 	void InitPhysicsLevel1();
 	void InitPhysicsLevel2();
 	void InitPhysicsLevel3();
 	
 
-	//main gameloop, dibujar, eventos y el setzoom para escalar la vista
+	//gameloop, dibujar, actualizar, eventos y el setzoom para escalar la vista
 
 	void loop();
 	void Dibujar();
@@ -205,7 +205,7 @@ public:
 	void Level2();
 	void Level3();
 
-	//avanzar de nivel y resetear nivel
+	//métodos para avanzar de nivel, resetear nivel y ajustar posiciones de las cajas
 	void NextLevel();
 	void ResetLevel();
 	void Posiciones();
@@ -213,11 +213,11 @@ public:
 	//menú de inicio, menú de informacion del juego
 	void MenuInicio();
 	void MenuInfo();
-	//NO LO USÉ TODAVIA
+	//menú de victoria y game over
 	void MenuGameOver();
 	void MenuVictory();
 
-	//para comprobar si las cajas están en la zona correcta
+	//para comprobar si las cajas están en la zona del contenedor
 	bool CajaEnZona1(b2Body* caja1);
 	bool CajaEnZona2(b2Body* caja2);
 	bool CajaEnZona3(b2Body* caja3);
