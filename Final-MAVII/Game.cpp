@@ -405,8 +405,8 @@ void Game::Dibujar()
 	}
 
 	if (currentLevel == 3) {
-		m_AvatarEngr1->Dibujar(*wnd);
-		m_AvatarEngr2->Dibujar(*wnd);
+		m_AvatarPolea1->Dibujar(*wnd);
+		m_AvatarPolea2->Dibujar(*wnd);
 
 		
 		m_AvatarCoso1->Actualizar();
@@ -761,27 +761,27 @@ void Game::InitPhysicsLevel2() {
 
 void Game::InitPhysicsLevel3() {
 
-	engranaje1 = Box2DHelper::CreateCircularStaticBody(phyWorld, 5.0f);
-	engranaje2 = Box2DHelper::CreateCircularStaticBody(phyWorld, 5.0f);
-	engranaje1->SetTransform(b2Vec2(40.0f, 40.0f), 0.0f);
-	engranaje2->SetTransform(b2Vec2(80.0f, 15.0f), 0.0f);
+	polea1 = Box2DHelper::CreateCircularStaticBody(phyWorld, 5.0f);
+	polea2 = Box2DHelper::CreateCircularStaticBody(phyWorld, 5.0f);
+	polea1->SetTransform(b2Vec2(40.0f, 40.0f), 0.0f);
+	polea2->SetTransform(b2Vec2(80.0f, 15.0f), 0.0f);
 	coso1 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 3, 15, 1.0f, 1.0f, 1.0f);
 	coso2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 2, 20, 1.0f, 1.0f, 1.0f);
 	coso1->SetTransform(b2Vec2(40.0f, 60.0f), 0.0f);
 	coso2->SetTransform(b2Vec2(80.0f, 50.0f), 0.0f);
 
-	b2RevoluteJoint* revJoint = Box2DHelper::CreateRevoluteJoint(phyWorld, engranaje1, engranaje1->GetWorldCenter(),
+	b2RevoluteJoint* revJoint = Box2DHelper::CreateRevoluteJoint(phyWorld, polea1, polea1->GetWorldCenter(),
 		coso1, 0.0f, 0.0f, 10.0f, 1000.0f, false, false);
-	b2PrismaticJoint* prisJoint = Box2DHelper::CreatePrismaticJoint(phyWorld, engranaje2, engranaje2->GetWorldCenter(),
+	b2PrismaticJoint* prisJoint = Box2DHelper::CreatePrismaticJoint(phyWorld, polea2, polea2->GetWorldCenter(),
 		coso2, b2Vec2(0.0f, 1.0f), -5, 5, -10.0f, 10000.0f, true, true);
-	b2GearJoint* pGearJoint = Box2DHelper::CreateGearJoint(phyWorld, engranaje1, engranaje2, revJoint, prisJoint, 10.0f);
+	b2GearJoint* pGearJoint = Box2DHelper::CreateGearJoint(phyWorld, polea1, polea2, revJoint, prisJoint, 10.0f);
 
-	engrText.loadFromFile("assets/BaseCanon.png");
-	sf::Sprite* engspr1 = new sf::Sprite(engrText);
-	sf::Sprite* engspr2 = new sf::Sprite(engrText);
+	poleaText.loadFromFile("assets/BaseCanon.png");
+	sf::Sprite* polspr1 = new sf::Sprite(poleaText);
+	sf::Sprite* polspr2 = new sf::Sprite(poleaText);
 
-	m_AvatarEngr1 = new Avatar(engranaje1, engspr1);
-	m_AvatarEngr2 = new Avatar(engranaje2, engspr2);
+	m_AvatarPolea1 = new Avatar(polea1, polspr1);
+	m_AvatarPolea2 = new Avatar(polea2, polspr2);
 
 	sf::Sprite* cosospr1 = new sf::Sprite(platText);
 	sf::Sprite* cosospr2 = new sf::Sprite(platText);

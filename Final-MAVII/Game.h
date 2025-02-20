@@ -45,7 +45,7 @@ private:
 	Texture* textura5;
 	Sprite* menuVictory;
 
-	//cuerpo del cañon
+	//cuerpo del cañon y su avatar
 	b2Body* cannon;
 	Avatar* m_AvatarCannon;
 	Texture canonText;
@@ -58,7 +58,6 @@ private:
 	b2Body* piso;
 	Avatar* m_AvatarPiso;
 	Texture pi;
-
 	//cuerpo, avatar y textura techo
 	b2Body* techo;
 	Avatar* m_AvatarTecho;
@@ -73,8 +72,7 @@ private:
 	Texture pd;
 
 		
-
-	//cuerpo, avatar y textura de la columna
+	//cuerpo, avatar y textura de columna
 	b2Body* columna1;
 	Avatar* m_AvatarCol1;
 	Texture col1;
@@ -92,7 +90,7 @@ private:
 	Avatar* m_Avatar3;
 	Texture t;
 
-	//cuerpo, avatar y textura las tres plataformas LEVEL1
+	//cuerpo, avatar y textura las tres plataformas del LEVEL1
 	b2Body* plataforma1;
 	Avatar* m_AvatarPlatf1;
 
@@ -110,7 +108,7 @@ private:
 	b2Body* plataforma5;
 	Avatar* m_AvatarPlatf5;
 
-	//LEVEL 2, cuerpo, avatares de pulley joint
+	//cuerpo, avatares de pulley joint del LEVEL2
 	b2Body* ascensor1Base;
 	Avatar* m_AvatarAscensBase1;
 	b2Body* ascensor1Col;
@@ -129,14 +127,14 @@ private:
 	Avatar* m_AvatarPlanoInclinado;
 	Texture planoInc;
 
-	//LEVEL3
+	//cuerpo y avatares de los engranajes del LEVEL3
 
-	b2Body* engranaje1;
-	Avatar* m_AvatarEngr1;
+	b2Body* polea1;
+	Avatar* m_AvatarPolea1;
 
-	b2Body* engranaje2;
-	Avatar* m_AvatarEngr2;
-	Texture engrText;
+	b2Body* polea2;
+	Avatar* m_AvatarPolea2;
+	Texture poleaText;
 
 	b2Body* coso1;
 	Avatar* m_AvatarCoso1;
