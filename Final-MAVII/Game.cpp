@@ -407,7 +407,7 @@ void Game::Dibujar()
 	m_AvatarCannon->Dibujar(*wnd);
 	m_AvatarBaseCannon->Dibujar(*wnd);
 	
-
+	//actualizamos y dibujamos los ragdolls
 	for (auto& ragdoll : ragdolls) {
 		ragdoll->Actualizar(); // Llama a la función que actualiza el sprite del torso
 	}
@@ -416,6 +416,7 @@ void Game::Dibujar()
 		ragdoll->Dibujar(*wnd); // Llama a la función que dibuja el sprite del torso
 	}
 
+	//digujamos el contador de ragdoll y las texturas de cajas correctas
 	wnd->draw(*textContador);
 	wnd->draw(*cajaCorrecta1);
 	wnd->draw(*cajaCorrecta2);
