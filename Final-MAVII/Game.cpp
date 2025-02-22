@@ -2,15 +2,6 @@
 #include "Box2DHelper.h"
 #include <iostream>
 
-//   VER SI HAY QUE REDIBUJAR ALGUN SPRITE
-//   introducir musica??
-//     
-//    REVISAR DESTRUCTOR - OBJETOS A DESTRUIR PARA GESTIONAR MEMORIA
-//    LIMPIAR CÒDIGO
-//    LIMPIAR EN DIBUJAR() LOS OBJETOS QUE NO SE MUEVEN
-//	  COMENTAR CODIGO
-
-
 
 //constructor 
 Game::Game(int ancho, int alto, std::string titulo)
@@ -24,7 +15,7 @@ Game::Game(int ancho, int alto, std::string titulo)
 
 	//Establecer el contador de ragdolls en cero
 	contadorRagdolls = 0;
-	//utilizar para hacer la cuenta regresiva//////
+	//utilizar para hacer la cuenta regresiva
 	ragdollsRestantes = 10;
 
 	//fuente y texto para el texto que cuenta los ragdolls
@@ -55,7 +46,7 @@ Game::Game(int ancho, int alto, std::string titulo)
 	cajaCorrecta3->setTexture(*cajaIncorrectaTx);
 	cajaCorrecta3->setPosition(90, 0.5);
 		
-	//Textura y Sprite del menú inicio y el menú de información
+	//Textura y Sprite del menú inicio, el menú de información, gameover, victoria y todos los niveles
 	textura1 = new Texture;
 	fondo = new Sprite;
 	textura1->loadFromFile("assets/menuInicio2.jpg");
@@ -91,6 +82,8 @@ Game::Game(int ancho, int alto, std::string titulo)
 	textura5->loadFromFile("assets/victory.png");
 	menuVictory->setTexture(*textura5);
 
+	//establecer la posicion de las cajas
+
 	box1positionX = 60.0f;
 	box2positionX = 60.0f;
 	box3positionX = 60.0f;
@@ -98,8 +91,9 @@ Game::Game(int ancho, int alto, std::string titulo)
 
 	//aplicar la escala
 	SetZoom();
-	//iniciar físicas
+	//iniciar físicas base
 	InitPhysics();
+	//iniciar físicas del nivel1
 	InitPhysicsLevel1();
 
 	//ejecutar primero el menú inicio
@@ -109,18 +103,11 @@ Game::Game(int ancho, int alto, std::string titulo)
 	currentLevel = 1;
 	levelCompleted = false;
 	
-
-	//PRUEBA POSICIONES CAJAS
-
-	
-
-	
-
-		
+			
 
 }
-//-------------------------------------------------------------------------------SEGUIR COMENTANDO
-//el clásico gameloop
+
+//el gameloop
 void Game::loop()
 {
 	while (wnd->isOpen())
