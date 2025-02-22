@@ -737,8 +737,10 @@ void Game::InitPhysicsLevel2() {
 
 }
 
+//iniciamos físicas nivel 3
 void Game::InitPhysicsLevel3() {
 
+	//creamos poleas y sus cargas
 	polea1 = Box2DHelper::CreateCircularStaticBody(phyWorld, 5.0f);
 	polea2 = Box2DHelper::CreateCircularStaticBody(phyWorld, 5.0f);
 	polea1->SetTransform(b2Vec2(40.0f, 40.0f), 0.0f);
@@ -748,26 +750,28 @@ void Game::InitPhysicsLevel3() {
 	carga1->SetTransform(b2Vec2(40.0f, 60.0f), 0.0f);
 	carga2->SetTransform(b2Vec2(80.0f, 50.0f), 0.0f);
 
+	//creamos los joints para unir las poleas a las cargas
 	b2RevoluteJoint* revJoint = Box2DHelper::CreateRevoluteJoint(phyWorld, polea1, polea1->GetWorldCenter(),
 		carga1, 0.0f, 0.0f, 10.0f, 1000.0f, false, false);
 	b2PrismaticJoint* prisJoint = Box2DHelper::CreatePrismaticJoint(phyWorld, polea2, polea2->GetWorldCenter(),
 		carga2, b2Vec2(0.0f, 1.0f), -5, 5, -10.0f, 10000.0f, true, true);
 	b2GearJoint* pGearJoint = Box2DHelper::CreateGearJoint(phyWorld, polea1, polea2, revJoint, prisJoint, 10.0f);
 
+	//Creamos los sprites de las dos poleas
 	poleaText.loadFromFile("assets/BaseCanon.png");
 	sf::Sprite* polspr1 = new sf::Sprite(poleaText);
 	sf::Sprite* polspr2 = new sf::Sprite(poleaText);
-
+	//Creamos los avatares de las dos poleas
 	m_AvatarPolea1 = new Avatar(polea1, polspr1);
 	m_AvatarPolea2 = new Avatar(polea2, polspr2);
-
+	//creamos los sprites de las cargas
 	sf::Sprite* cargaspr1 = new sf::Sprite(platText);
 	sf::Sprite* cargaspr2 = new sf::Sprite(platText);
-
+	//creamos los avatares de las cargas
 	m_AvatarCarga1 = new Avatar(carga1, cargaspr1);
 	m_AvatarCarga2 = new Avatar(carga2, cargaspr2);
 
-
+	//creamos el plano inclinado del nivel 3
 	planoInclinado2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 15, 3);
 	planoInclinado2->SetTransform(b2Vec2(75.0f, 60.0f), 0.0f);
 	//asignamos la textura al sprite y al avatar
@@ -775,11 +779,12 @@ void Game::InitPhysicsLevel3() {
 	m_AvatarPlanoInclinado2 = new Avatar(planoInclinado2, pispr2);
 	planoInclinado2->SetTransform(b2Vec2(75.0f, 68.0f), b2_pi / 4.0f);
 
+	//creamos la columna obstáculo del nivel 3
 	columnaLevel3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 2, 50);
 	columnaLevel3->SetTransform(b2Vec2(70.0f, 40.0f), 0.0f);
 	//asignamos la textura al sprite y al avatar
 	sf::Sprite* col3 = new sf::Sprite(col1);
-	//avatar del pared derecha
+	//avatar de la columna
 	m_AvatarColLev3 = new Avatar(columnaLevel3, col3);
 }
 
