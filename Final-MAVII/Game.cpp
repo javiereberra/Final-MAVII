@@ -642,58 +642,57 @@ void Game::InitPhysics()
 	ragdollsRestantes = 10;
 
 }
-
+//iniciamos fìsicas del nivel 1
 void Game::InitPhysicsLevel1(){
 
+	//Creamos las tres plataformas y sus avatares
 	plataforma1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
 	plataforma1->SetTransform(b2Vec2(60.0f, 20.0f), 0.0f);
 	//asignamos la textura al sprite y al avatar	
 	platText.loadFromFile("assets/platform.png");
 	sf::Sprite* pfspr1 = new sf::Sprite(platText);
-	//avatar del pared derecha
+	//avatar del plataforma1
 	m_AvatarPlatf1 = new Avatar(plataforma1, pfspr1);
-
-
 
 	plataforma2 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
 	plataforma2->SetTransform(b2Vec2(60.0f, 40.0f), 0.0f);
 	//asignamos la textura al sprite y al avatar	
 	sf::Sprite* pfspr2 = new sf::Sprite(platText);
-	//avatar del pared derecha
+	//avatar del plataforma2
 	m_AvatarPlatf2 = new Avatar(plataforma2, pfspr2);
-
 
 	plataforma3 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
 	plataforma3->SetTransform(b2Vec2(60.0f, 60.0f), 0.0f);
 	//asignamos la textura al sprite y al avatar	
 	sf::Sprite* pfspr3 = new sf::Sprite(platText);
-	//avatar del pared derecha
+	//avatar del plataforma3
 	m_AvatarPlatf3 = new Avatar(plataforma3, pfspr3);
 
 }
-
+//iniciamos físicas del nivel 2
 void Game::InitPhysicsLevel2() {
 
+	//creamos el ascensor del lado izquierdo
 	ascensor1Base = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 10, 3, 1.0f, 1.0f, 1.0f);
 	ascensor1Base->SetTransform(b2Vec2(40.0f, 50.0f), 0.0f);
 	ascensor1Col = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 2, 11, 1.0f, 1.0f, 1.0f);
 	ascensor1Col->SetTransform(b2Vec2(45.0f, 45.0f), 0.0f);
 	ascensor1Col2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 2, 11, 1.0f, 1.0f, 1.0f);
 	ascensor1Col2->SetTransform(b2Vec2(35.0f, 45.0f), 0.0f);
-
 	ascensor1Base->SetFixedRotation(true);
 
+	//creamos la carga del lado derecho
 	ascensor2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 2, 40, 1.0f, 1.0f, 1.0f);
 	ascensor2->SetTransform(b2Vec2(78.0f, 50.0f), 0.0f);
-
 	ascensor2->SetFixedRotation(true);
 
+	//creamos el joint entre los dos elementos para el efecto fìsico del ascensor
 	b2WeldJoint* ascensorCol1 = Box2DHelper::CreateWeldJoint(phyWorld, ascensor1Base, ascensor1Col, ascensor1Col->GetWorldCenter());
 	b2WeldJoint* ascensorCol2 = Box2DHelper::CreateWeldJoint(phyWorld, ascensor1Base, ascensor1Col2, ascensor1Col2->GetWorldCenter());
-
 	b2PulleyJoint* pJoint = Box2DHelper::CreatePulleyJoint(phyWorld, ascensor1Base, ascensor1Base->GetWorldCenter(), b2Vec2(30.0f, 0.0f),
 	ascensor2, ascensor2->GetWorldCenter(), b2Vec2(70.0f, 0.0f), 1.0f);
 
+	//creamos los sprites y avateres del ascensor y la carga
 	sf::Sprite* acspr1 = new sf::Sprite(platText);
 	m_AvatarAscensBase1 = new Avatar(ascensor1Base, acspr1);
 	sf::Sprite* acspr1b = new sf::Sprite(platText);
@@ -704,25 +703,26 @@ void Game::InitPhysicsLevel2() {
 	sf::Sprite* acspr2 = new sf::Sprite(platText);
 	m_AvatarAscens2 = new Avatar(ascensor2, acspr2);
 
+	//creamos los obstàculos para el nivel 2
 	plataforma4 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
 	plataforma4->SetTransform(b2Vec2(70.0f, 40.0f), 0.0f);
 	//asignamos la textura al sprite y al avatar	
 	sf::Sprite* pfspr4 = new sf::Sprite(platText);
-	//avatar del pared derecha
+	//avatar de plataforma4
 	m_AvatarPlatf4 = new Avatar(plataforma4, pfspr4);
 
 	plataforma5 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 12, 2);
 	plataforma5->SetTransform(b2Vec2(85.0f, 45.0f), 0.0f);
 	//asignamos la textura al sprite y al avatar	
 	sf::Sprite* pfspr5 = new sf::Sprite(platText);
-	//avatar del pared derecha
+	//avatar de plataforma5
 	m_AvatarPlatf5 = new Avatar(plataforma5, pfspr5);
 
 	paredDMedio = Box2DHelper::CreateRectangularStaticBody(phyWorld, 3, 90);
 	paredDMedio->SetTransform(b2Vec2(50.0f, 50.0f), 0.0f);
 	//asignamos la textura al sprite y al avatar
 	sf::Sprite* pdmspr = new sf::Sprite(platText);
-	//avatar del pared derecha
+	//avatar de pared del medio
 	m_AvatarParedDMedio = new Avatar(paredDMedio, pdmspr);
 
 
@@ -730,9 +730,8 @@ void Game::InitPhysicsLevel2() {
 	planoInclinado->SetTransform(b2Vec2(75.0f, 60.0f), 0.0f);
 	//asignamos la textura al sprite y al avatar
 	planoInc.loadFromFile("assets/piso.png");
-	sf::Sprite* pispr = new sf::Sprite(planoInc);
-	
-	//avatar del pared derecha
+	sf::Sprite* pispr = new sf::Sprite(planoInc);	
+	//avatar de plano inclinado
 	m_AvatarPlanoInclinado = new Avatar(planoInclinado, pispr);
 	planoInclinado->SetTransform(b2Vec2(65.0f, 55.0f), b2_pi / 4.0f);
 
