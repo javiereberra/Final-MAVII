@@ -788,10 +788,8 @@ void Game::InitPhysicsLevel3() {
 	m_AvatarColLev3 = new Avatar(columnaLevel3, col3);
 }
 
-
+//método para le menú inicio
 void Game::MenuInicio() {
-
-
 
 
 	wnd->setView(wnd->getDefaultView());
@@ -809,7 +807,7 @@ void Game::MenuInicio() {
 					// Opción para iniciar el juego
 					SetZoom();
 					MenuInfo();
-					return;  // Salimos del menú y continuamos con el juego
+					return;  // Salimos del menú y continuamos con el menu info
 				}
 				else if (event.key.code == sf::Keyboard::Num2) {
 					// Opción para salir
@@ -827,11 +825,8 @@ void Game::MenuInicio() {
 	
 }
 
-
+//método para el menú informativo
 void Game::MenuInfo() {
-
-
-
 
 	wnd->setView(wnd->getDefaultView());
 
@@ -847,7 +842,7 @@ void Game::MenuInfo() {
 				if (event.key.code == sf::Keyboard::Space) {
 					// Opción para continuar el juego
 					SetZoom();
-					return;  // Salimos del menú y continuamos con el juego
+					return;  // Salimos del menú y continuamos con el loop
 				}
 			}
 		}
@@ -860,7 +855,7 @@ void Game::MenuInfo() {
 
 }
 
-
+//método para el gameover
 void Game::MenuGameOver(){
 
 	wnd->setView(wnd->getDefaultView());
@@ -875,7 +870,7 @@ void Game::MenuGameOver(){
 			}
 			if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Space) {
-										
+							//presionamos SPACE para cerrar ventana			
 					wnd->close();
 				}
 			}
@@ -892,7 +887,7 @@ void Game::MenuGameOver(){
 
 
 }
-
+//método menu victoria
 void Game::MenuVictory() {
 
 	wnd->setView(wnd->getDefaultView());
@@ -907,7 +902,7 @@ void Game::MenuVictory() {
 			}
 			if (event.type == sf::Event::KeyPressed) {
 				if (event.key.code == sf::Keyboard::Space) {
-
+					//presionamos SPACE para cerrar ventana			
 					wnd->close();
 				}
 			}
@@ -925,7 +920,7 @@ void Game::MenuVictory() {
 
 }
 
-//destructor de game
+//destructor de game, eliminamos los ragdolls y el phyworld
 Game::~Game(void) {
 	for (auto& ragdoll : ragdolls) {
 		delete ragdoll;
