@@ -128,58 +128,57 @@ void Game::loop()
 		case 3:
 			Level3();
 			break;
-		default:
-			std::cout << "No hay más niveles." << std::endl;
+		default:			
 			wnd->close();
 			break;
 		}
-
-		//Actualizar();
-		//Dibujar();
+				
 		wnd->display();
 
 	}
 }
 
-
+//Métodos para comprobar si las cajas están en el contenedor
 bool Game::CajaEnZona1(b2Body* caja1) {
-	// Obtener la posición de la caja en el mundo de Box2D
+	// Obtener la posición de la caja
 	b2Vec2 pos = caja1->GetPosition();
 
 	// Verificar si la posición de la caja está dentro de los límites de la zona (80, 80) a (100, 100)
 	if (pos.x >= 80 && pos.x <= 96 && pos.y >= 72 && pos.y <= 95) {
-		return true; // Está dentro de la zona
+		return true; // dentro de la zona
 	}
 
 	return false; // Fuera de la zona
 }
 
 bool Game::CajaEnZona2(b2Body* caja2) {
-	// Obtener la posición de la caja en el mundo de Box2D
+	// Obtener la posición de la caja
 	b2Vec2 pos = caja2->GetPosition();
 
-	// Verificar si la posición de la caja está dentro de los límites de la zona (80, 80) a (100, 100)
+	// Verificar si la posición de la caja está dentro de los límites de la zona
 	if (pos.x >= 80 && pos.x <= 96 && pos.y >= 72 && pos.y <= 95) {
-		return true; // Está dentro de la zona
+		return true; // dentro de la zona
 	}
 
 	return false; // Fuera de la zona
 }
 
 bool Game::CajaEnZona3(b2Body* caja3) {
-	// Obtener la posición de la caja en el mundo de Box2D
+	// Obtener la posición de la caja
 	b2Vec2 pos = caja3->GetPosition();
 
-	// Verificar si la posición de la caja está dentro de los límites de la zona (80, 80) a (100, 100)
+	// Verificar si la posición de la caja está dentro de los límites de la zona
 	if (pos.x >= 80 && pos.x <= 96 && pos.y >= 72 && pos.y <= 95) {
-		return true; // Está dentro de la zona
+		return true; // dentro de la zona
 	}
 
 	return false; // Fuera de la zona
 }
 
+//Método para ajustar las posiciones de las cajas en cada nivel
 void Game::Posiciones() {
 	
+	//Posiciones del nivel 2
 	if (currentLevel == 2) {
 	
 		box1positionX = 60.0f;
@@ -187,7 +186,7 @@ void Game::Posiciones() {
 		box3positionX = 60.0f;
 	
 	}
-
+	//Posiciones del nivel 3
 	if (currentLevel == 3) {
 
 		box1positionX = 73.0f;
@@ -202,27 +201,24 @@ void Game::Posiciones() {
 
 void Game::Level1()
 {	
-	// Lógica de actualización del nivel 1
-	Actualizar(); // Actualiza las físicas del mundo, objetos, etc.
+	// Actualizamos todas las físicas antes de empezar
+	Actualizar(); 
 
 	// Dibujar objetos del nivel 1
-	Dibujar(); // Aquí dibujas los objetos del nivel, ragdolls, etc.
-
-	// Condición para pasar al siguiente nivel
-
-	//LO DEJAMOS COMENTADO POR LAS DUDAS, LUEGO BORRARLO
-	//if (contadorRagdolls >= 10) {
-	//	levelCompleted = true;
-	//	NextLevel(); // Pasamos al siguiente nivel
-	//	InitPhysicsLevel2();
-	//}
+	Dibujar(); 
+		
+	// CONDICION DE VICTORIA
+	// comprobamos las cajas en la zona del contenedor
+	// si da true, pasamos al siguiente nivel e iniciamos físicas del nivel 2
 
 	if ((CajaEnZona1(caja1)) && (CajaEnZona2(caja2)) && (CajaEnZona3(caja3))) {
 		levelCompleted = true;
 		NextLevel(); // Pasamos al siguiente nivel
-		InitPhysicsLevel2();
+		InitPhysicsLevel2(); //iniciar fìsicas del nivel 2
 	}
 
+	// CONDICION DE DERROTA
+	// si se agotan los ragdolls pasamos al menú GameOver
 	if (ragdollsRestantes == -1) {
 		MenuGameOver();
 	}
