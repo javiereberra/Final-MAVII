@@ -293,6 +293,7 @@ void Game::ResetLevel()
 	ragdolls.clear();
 }
 
+//mètodo para actualizar la textura de las cajas correctas cuando están dentro del contenedor
 void Game::CajasCorrectas() 
 {
 	if (CajaEnZona1(caja1)) {
@@ -317,7 +318,7 @@ void Game::CajasCorrectas()
 	}
 }
 
-//actualiza el phyworld
+//actualiza el phyworld, el contador de ragdolls y las texturas de cajas correctas
 void Game::Actualizar()
 {
 	phyWorld->Step(frameTime, 8, 8);
@@ -330,10 +331,12 @@ void Game::Actualizar()
 	
 
 }
-//para dibujar objetos, no se usa pero lo dejamos para cuando hagamos el final con los sprites
+//Dibujamos todos los objetos
 void Game::Dibujar()
 {
 	// EVALUAR SI SON NECESARIOS LOS ACTUALIZAR DE LOS OBJETOS ESTÁTICOS?
+
+	//Dibujamos el fondo según el nivel en el que nos encontramos
 	if (currentLevel == 1) {
 		wnd->draw(*factoryLevel1);
 	}
@@ -344,27 +347,29 @@ void Game::Dibujar()
 		wnd->draw(*factoryLevel3);
 	}
 
+	//dibujamos y actualizamos las cajas
 	m_Avatar1->Actualizar();
 	m_Avatar1->Dibujar(*wnd);
 	m_Avatar2->Actualizar();
 	m_Avatar2->Dibujar(*wnd);
 	m_Avatar3->Actualizar();
 	m_Avatar3->Dibujar(*wnd);		
-	m_AvatarParedI->Actualizar();
-	m_AvatarParedI->Dibujar(*wnd);
-	m_AvatarParedD->Actualizar();
-	m_AvatarParedD->Dibujar(*wnd);
-	m_AvatarTecho->Actualizar();
-	m_AvatarTecho->Dibujar(*wnd);
-	m_AvatarPiso->Actualizar();
+
+	//dibujamos piso, techo y paredes del escenario
+	
+	m_AvatarParedI->Dibujar(*wnd);	
+	m_AvatarParedD->Dibujar(*wnd);	
+	m_AvatarTecho->Dibujar(*wnd);	
 	m_AvatarPiso->Dibujar(*wnd);
 	
+	//si estamos en el nivel 1, dibujamos las tres plataformas
 	if (currentLevel == 1) {
 		m_AvatarPlatf1->Dibujar(*wnd);
 		m_AvatarPlatf2->Dibujar(*wnd);
 		m_AvatarPlatf3->Dibujar(*wnd);
 	}
 
+	//si estamos en el nivel 2, dibujamos ascensores, plataformas y otros obstàculos
 	if (currentLevel == 2) {
 		m_AvatarAscensBase1->Actualizar();
 		m_AvatarAscensBase1->Dibujar(*wnd);
@@ -376,38 +381,30 @@ void Game::Dibujar()
 		m_AvatarAscens2->Dibujar(*wnd);
 		m_AvatarPlatf4->Dibujar(*wnd);
 		m_AvatarPlatf5->Dibujar(*wnd);
-
 		m_AvatarParedDMedio->Dibujar(*wnd);
 		m_AvatarPlanoInclinado->Actualizar();
 		m_AvatarPlanoInclinado->Dibujar(*wnd);
 		
 	}
 
+	//si estamos en el nivel3, dibujamos polea, cargas y otros obstáculos
 	if (currentLevel == 3) {
 		m_AvatarPolea1->Dibujar(*wnd);
-		m_AvatarPolea2->Dibujar(*wnd);
-
-		
+		m_AvatarPolea2->Dibujar(*wnd);		
 		m_AvatarCarga1->Actualizar();
 		m_AvatarCarga1->Dibujar(*wnd);
-
 		m_AvatarCarga2->Actualizar();
-		m_AvatarCarga2->Dibujar(*wnd);
-
+		m_AvatarCarga2->Dibujar(*wnd);		
 		m_AvatarPlanoInclinado2->Actualizar();
 		m_AvatarPlanoInclinado2->Dibujar(*wnd);
 		m_AvatarColLev3->Dibujar(*wnd);
 		
 	}
 
-
-	m_AvatarCol1->Actualizar();
+	//dibujamos el cañon y la columna del contenedor que va en todos los niveles
 	m_AvatarCol1->Dibujar(*wnd);
-
 	m_AvatarCannon->Actualizar();
 	m_AvatarCannon->Dibujar(*wnd);
-
-	m_AvatarBaseCannon->Actualizar();
 	m_AvatarBaseCannon->Dibujar(*wnd);
 	
 
