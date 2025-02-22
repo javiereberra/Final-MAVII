@@ -228,53 +228,50 @@ void Game::Level1()
 void Game::Level2()
 {
 	
-	// Lógica de actualización del nivel 2
+	// Actualizamos físicas
 	Actualizar();
 	// Dibujar objetos del nivel 2
 	Dibujar();
 
-	// Condición para pasar al siguiente nivel
-	//LO DEJAMOS COMENTADO POR LAS DUDAS, LUEGO BORRARLO
-	//if (contadorRagdolls >= 20) {
-	//	levelCompleted = true;
-	//	NextLevel();
-	//	InitPhysicsLevel3();
-	//}
-
+	//Realizamos la misma comprobación que en el nivel 1
+	//CONDICION DE VICTORIA
 	if ((CajaEnZona1(caja1)) && (CajaEnZona2(caja2)) && (CajaEnZona3(caja3))) {
 		levelCompleted = true;
 		NextLevel(); // Pasamos al siguiente nivel
 		InitPhysicsLevel3();
 	}
+	//CONDICION DE DERROTA
 	if (ragdollsRestantes == -1) {
 		MenuGameOver();
 	}
 }
 
-// Método para el tercer nivel
+// repetimos el mismo proceso que en los niveles anteriores
 void Game::Level3()
 {
-	
-	// Lógica de actualización del nivel 3
+	//ACTUALIZAR Y DIBUJAR
 	Actualizar();
 	Dibujar();
 
+	//COMPROBACIÓN DE VICTORIA
 	if ((CajaEnZona1(caja1)) && (CajaEnZona2(caja2)) && (CajaEnZona3(caja3))) {
-		std::cout << "¡Felicidades, has completado el juego!" << std::endl;
+		//pasamos al Menú de Victoria porque ya no hay màs niveles
 		MenuVictory();		
 	}
-
+	//COMPROBACIÓN DE DERROTA
 	if (ragdollsRestantes == -1) {
 		MenuGameOver();
 	}
 }
 
+//Mètodo para saltar de un nivel al siguiente
 void Game::NextLevel()
 {
+	//Si el nivel está completado, pasamos al siguiente, reseteamos fìsicas y ajustamos posiciones
 	if (levelCompleted) {
 		
 		currentLevel++; // Incrementamos el nivel actual
-		ResetLevel(); // Reiniciar los parámetros del nuevo nivel
+		ResetLevel(); // Reiniciar el estado del nivel
 	}
 }
 
