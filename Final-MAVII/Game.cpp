@@ -487,13 +487,15 @@ void Game::Eventos()
 			//se aplica el impulso
 			ragdoll->applyImpulse(impulse);
 			ragdolls.push_back(ragdoll);
+			//sumamos al contador de ragdolls y restamos a los restantes
 			contadorRagdolls++;
 			ragdollsRestantes--;
-			std::cout << "Contador de Ragdolls: "<< contadorRagdolls << std::endl;
-			std::cout << "Ragdolls Restantes: " << ragdollsRestantes << std::endl;
+			std::cout << "Contador de Ragdolls: "<< contadorRagdolls << std::endl;			
 			break;
 		}
-		// COMPROBAR LAS POSICIONES //
+		// COMPROBACIÓN DE LA POSICION DE LAS CAJAS y CURSOR
+		// lo hice porque me daba errores, no es necesario para el juego
+		// se puede eliminar
 		case Event::KeyPressed:
 			if (evt.key.code == sf::Keyboard::Space) {
 				// Obtener la posición del objeto obstaPrueba en el mundo de Box2D
