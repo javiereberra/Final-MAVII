@@ -517,6 +517,7 @@ void Game::Eventos()
 //fijamos la escala
 void Game::SetZoom()
 {
+	//creamos y ajustamos la cámara
 	View camera;
 	camera.setSize(100.0f, 100.0f);
 	camera.setCenter(50.0f, 50.0f);
@@ -527,6 +528,7 @@ void Game::SetZoom()
 	sf::Vector2u windowSize = wnd->getSize();
 	scaleX = viewSize.x / windowSize.x;
 	scaleY = viewSize.y / windowSize.y;
+	//ajustamos la escala para el contador, las cajas correctas y los fondos de los niveles
 	textContador->setScale(scaleX, scaleY);
 	cajaCorrecta1->setScale(0.4 * scaleX, 0.4 * scaleY);
 	cajaCorrecta2->setScale(0.4 * scaleX, 0.4 * scaleY);
@@ -537,7 +539,7 @@ void Game::SetZoom()
 
 	
 }
-
+// Iniciamos las fìsicas base del juego
 void Game::InitPhysics()
 {
 	//inicializamos el mundo
@@ -583,18 +585,18 @@ void Game::InitPhysics()
 	//asignamos la textura al sprite y al avatar
 	te.loadFromFile("assets/Techo.png");
 	sf::Sprite* tech = new sf::Sprite(te);
-	//avatar del pared derecha
+	//avatar del techo
 	m_AvatarTecho = new Avatar(techo, tech);
 
 		        
-	
+	// COLUMNA DEL CONTENEDOR
 
 	columna1 = Box2DHelper::CreateRectangularStaticBody(phyWorld, 2, 26);
 	columna1->SetTransform(b2Vec2(80.0f, 83.0f), 0.0f);
 	//asignamos la textura al sprite y al avatar
 	col1.loadFromFile("assets/columna.png");
 	sf::Sprite* colspr1 = new sf::Sprite(col1);
-	//avatar del pared derecha
+	//avatar de la columna
 	m_AvatarCol1 = new Avatar(columna1, colspr1);
 
 
@@ -605,7 +607,7 @@ void Game::InitPhysics()
 	//asignamos la textura al sprite y al avatar
 	BaseCanonText.loadFromFile("assets/base1.png");
 	sf::Sprite* baseCanonSpr = new sf::Sprite(BaseCanonText);
-	//avatar del pared derecha
+	//avatar de la base del cañon
 	m_AvatarBaseCannon = new Avatar(BaseCannon, baseCanonSpr);
 
 
@@ -613,16 +615,14 @@ void Game::InitPhysics()
 	cannon = Box2DHelper::CreateRectangularStaticBody(phyWorld, 8, 1.8f);
 	canonText.loadFromFile("assets/cannon3.png");
 	sf::Sprite* canonSpr = new sf::Sprite(canonText);
-	
+	//avatar del cañon
 	m_AvatarCannon = new Avatar(cannon, canonSpr);
 
 	
-	//PRUEBA
-			//creamos las cajas
+	
+	//creamos las cajas y ajustamos las posiciones
 	caja1	= Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
 	caja1->SetTransform(b2Vec2(box1positionX, 30.0f), 0.0f);
-	
-
 	
 	caja2 = Box2DHelper::CreateRectangularDynamicBody(phyWorld, 7, 7, 0.1f, 0.1f, 0.1f);
 	caja2->SetTransform(b2Vec2(box2positionX, box2positionY), 0.0f);
@@ -633,12 +633,12 @@ void Game::InitPhysics()
 		//asignamos la textura al sprite y al avatar
 	t.loadFromFile("assets/block.png");
 	sf::Sprite* s = new sf::Sprite(t);
-	
-	
+		
 	m_Avatar1 = new Avatar(caja1, s);
 	m_Avatar2 = new Avatar(caja2, s);
 	m_Avatar3 = new Avatar(caja3, s);
 
+	//seteamos los ragdolls restantes para cada nivel
 	ragdollsRestantes = 10;
 
 }
