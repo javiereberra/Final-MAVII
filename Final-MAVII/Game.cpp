@@ -274,26 +274,25 @@ void Game::NextLevel()
 		ResetLevel(); // Reiniciar el estado del nivel
 	}
 }
-
+//mètodo para resetear los niveles
 void Game::ResetLevel()
 {
-	// LOGICA DE LA POSICION DE LAS CAJAS SEGÚN EL NIVEL
-	// 
+	// ajustamos las posiciones de las cajas
 	Posiciones();
-	// 
-	// 
-	// Aquí puedes restablecer el estado de los objetos para el nuevo nivel
-	InitPhysics(); // Por ejemplo, reiniciar las físicas
+	
+		
+	InitPhysics(); // reiniciamos las fìsicas base
 	SetZoom();     // Reajustar la cámara si es necesario
-	levelCompleted = false; // Restablecer la bandera de nivel completado
+	levelCompleted = false; // Restablecer la condicion de nivel completado
 
 
-	//para limpiar los ragdolls
+	//Eliminamos los ragdolls que utilizamos en el level anterior para limpiar el escenario
 	for (auto& ragdoll : ragdolls) {
 		delete ragdoll;  // Eliminar cada ragdoll de la memoria
 	}
 	ragdolls.clear();
 }
+
 void Game::CajasCorrectas() 
 {
 	if (CajaEnZona1(caja1)) {
